@@ -507,288 +507,434 @@
     <script>
       const curriculum = [
         {
-          label: "Month 1",
-          title: "Foundations, Interface Principles & Figma Mastery",
-          note: "Build correct habits with deep product thinking, basic element theory, and muscle memory configurations inside Figma.",
-          sections: [
+          month: "Month 1",
+          title: "Advanced React Framework & State Architecture",
+          note: "Isolate rendering performance, abstract reusable logic with hooks, and master deep client/server state orchestration.",
+          weeks: [
             {
-              title: "Week 1 — UI/UX Core Concepts & Product Thinking",
+              title:
+                "Week 1 — DOM Performance & Functional Rendering Stability",
               tasks: [
-                [
-                  "W1 D1",
-                  "Learn",
-                  "What UI is (User Interfaces as presentation layers)",
-                ],
-                [
-                  "W1 D2",
-                  "Learn",
-                  "What UX is (User Experience as friction optimization and workflows)",
-                ],
-                [
-                  "W1 D3",
-                  "Learn",
-                  "Product thinking (Balancing user goals with business KPIs)",
-                ],
-                [
-                  "W1 D4",
-                  "Learn",
-                  "Difference between UI, UX & Product Design operational scopes",
-                ],
-                [
-                  "W1 D5",
-                  "Understand",
-                  "Why users behave the way they do (Cognitive load limits & behaviors)",
-                ],
+                {
+                  type: "Theory",
+                  text: "Virtual DOM Diffing: Learn how React computes structural adjustments and applies patches.",
+                },
+                {
+                  type: "Code",
+                  text: "useMemo Array Filters: Cache intensive dataset filter logic execution using the useMemo hook.",
+                },
+                {
+                  type: "Theory",
+                  text: "Reference Equality: Master why inline functions re-instantiate, forcing downstream rendering cycles.",
+                },
+                {
+                  type: "Code",
+                  text: "useCallback Closures: Preserve child handler references across re-renders using useCallback.",
+                },
+                {
+                  type: "Debug",
+                  text: "React DevTools Profiler: Record component execution profiles and intercept redundant render triggers.",
+                },
               ],
             },
-
             {
-              title: "Week 2 — Visual Design Core Principles & Elements",
+              title: "Week 2 — Persistent References & Custom Extraction Hooks",
               tasks: [
-                [
-                  "W2 D1",
-                  "Learn",
-                  "Design principles: Contrast, Alignment, and Hierarchy",
-                ],
-                [
-                  "W2 D2",
-                  "Learn",
-                  "Layout Balance, Repetition, and White Space",
-                ],
-                [
-                  "W2 D3",
-                  "Learn",
-                  "Color theory basics and emotional psychology",
-                ],
-                [
-                  "W2 D4",
-                  "Learn",
-                  "Accessibility and WCAG contrast guidelines",
-                ],
-                [
-                  "W2 D5",
-                  "Learn",
-                  "Typography pairing and readability systems",
-                ],
+                {
+                  type: "Theory",
+                  text: "useRef Mutable Box Engine: Understand how mutable values persist across cycles without triggering UI redraws.",
+                },
+                {
+                  type: "Code",
+                  text: "DOM Node Focus Anchoring: Bind a ref to an input element to handle programmatic focus triggers.",
+                },
+                {
+                  type: "Theory",
+                  text: "Custom Hook Isolation Rules: Abstract combinations of useState and useEffect into shareable files.",
+                },
+                {
+                  type: "Code",
+                  text: "useLocalStorage Engine: Code a custom hook that syncs local reactive states with browser storage.",
+                },
+                {
+                  type: "Code",
+                  text: "useDebounce Optimization: Drop high-frequency parameters into delayed timer windows.",
+                },
               ],
             },
-
             {
-              title: "Week 3 — Figma Component Mechanics",
+              title: "Week 3 — Central Client States (Redux Toolkit Ecosystem)",
               tasks: [
-                ["W3 D1", "Learn", "Frames vs Groups and layout structuring"],
-                ["W3 D2", "Learn", "Nested Auto Layout systems"],
-                ["W3 D3", "Learn", "Master Components and Variants"],
-                ["W3 D4", "Learn", "Responsive Constraints and Layout Grids"],
-                [
-                  "W3 D5",
-                  "Prac",
-                  "Build interactive prototypes with smart animations",
-                ],
+                {
+                  type: "Theory",
+                  text: "Redux Flow Architecture: Trace how actions travel through slices to update global data streams.",
+                },
+                {
+                  type: "Code",
+                  text: "Central Store Orchestration: Initialize the primary store instance wrapper via configureStore().",
+                },
+                {
+                  type: "Code",
+                  text: "Slice Reducer Design: Build an isolated uiSlice.js file tracking shared UI sidebars and modal states.",
+                },
+                {
+                  type: "Code",
+                  text: "useDispatch Functional Triggers: Fire slice mutations from deep components using the dispatch hook.",
+                },
+                {
+                  type: "Code",
+                  text: "useSelector State Reading: Read specific state keys cleanly without causing unneeded component renders.",
+                },
               ],
             },
-
             {
-              title: "Week 4 — Vector Mastery & Copy Work",
+              title: "Week 4 — Server Cache Synchronization (TanStack Query)",
               tasks: [
-                ["W4 D1", "Prac", "Recreate simple mobile UI screens daily"],
-                [
-                  "W4 D2",
-                  "Study",
-                  "Analyze spacing and layout patterns in modern apps",
-                ],
-                ["W4 D3", "Prac", "Copy Spotify interface layouts"],
-                ["W4 D4", "Prac", "Copy Instagram feed structures"],
-                [
-                  "W4 D5",
-                  "Goal",
-                  "Navigate and build in Figma without friction",
-                ],
-              ],
-            },
-          ],
-        },
-
-        {
-          label: "Month 2",
-          title: "Interface Layout Patterns & UX Research",
-          note: "Transition from isolated UI recreations into scalable UX systems and user research workflows.",
-          sections: [
-            {
-              title: "Week 5 — Layout Patterns & Mobile Components",
-              tasks: [
-                [
-                  "W5 D1",
-                  "Learn",
-                  "Mobile navigation patterns and floating actions",
-                ],
-                [
-                  "W5 D2",
-                  "Learn",
-                  "Responsive layouts for mobile, tablet, and desktop",
-                ],
-                ["W5 D3", "Learn", "8-point spacing system and layout rhythm"],
-                ["W5 D4", "Prac", "Design a responsive Login screen"],
-                ["W5 D5", "Prac", "Build a Signup onboarding flow"],
-              ],
-            },
-
-            {
-              title: "Week 6 — Real UI Layout Practice",
-              tasks: [
-                ["W6 D1", "Learn", "Shadows, elevation, cards, and UI depth"],
-                ["W6 D2", "Learn", "Modern visual hierarchy techniques"],
-                ["W6 D3", "Prac", "Design a dashboard analytics layout"],
-                ["W6 D4", "Prac", "Design a food delivery app homepage"],
-                ["W6 D5", "Prac", "Design a banking transaction screen"],
-              ],
-            },
-
-            {
-              title: "Week 7 — UX Research Fundamentals",
-              tasks: [
-                [
-                  "W7 D1",
-                  "Learn",
-                  "User interview structures and question framing",
-                ],
-                ["W7 D2", "Learn", "Surveys and validation methods"],
-                ["W7 D3", "Learn", "Competitive analysis and market audits"],
-                [
-                  "W7 D4",
-                  "Learn",
-                  "Identifying user pain points from research",
-                ],
-                [
-                  "W7 D5",
-                  "Understand",
-                  "Designing for user needs over personal taste",
-                ],
-              ],
-            },
-
-            {
-              title: "Week 8 — Information Architecture & User Flows",
-              tasks: [
-                ["W8 D1", "Learn", "User journey mapping and emotional flows"],
-                ["W8 D2", "Learn", "Navigation hierarchies and app structures"],
-                ["W8 D3", "Prac", "Create a food delivery service flowchart"],
-                ["W8 D4", "Prac", "Map a banking transaction workflow"],
-                ["W8 D5", "Prac", "Build an e-commerce checkout flow"],
+                {
+                  type: "Theory",
+                  text: "Client-State vs Server-State Separation: Learn why remote data needs a caching layer instead of local UI states.",
+                },
+                {
+                  type: "Code",
+                  text: "useQuery Infrastructure: Hook up network GET requests mapped to explicit string array keys.",
+                },
+                {
+                  type: "Code",
+                  text: "Conditional Content Mapping: Render isLoading, isError, and cache data branches smoothly.",
+                },
+                {
+                  type: "Code",
+                  text: "useMutation Server Updates: Process data modifications on endpoints using mutation pipelines.",
+                },
+                {
+                  type: "Code",
+                  text: "Cache Key Invalidation: Force automatic data re-fetching across active queries with queryClient.",
+                },
               ],
             },
           ],
         },
 
         {
-          label: "Month 3",
-          title: "Wireframing, Prototyping & Design Systems",
-          note: "Convert ideas into structured systems, interactive flows, and reusable UI architectures.",
-          sections: [
+          month: "Month 2",
+          title: "Form Validation & Layered Backend Architectures",
+          note: "Secure web inputs via runtime parsing schemas while migrating single-file servers into structured enterprise layers.",
+          weeks: [
             {
-              title: "Week 9 — Low & Mid Fidelity Wireframes",
+              title: "Week 5 — High-Performance Form Handling & Schema Parsing",
               tasks: [
-                ["W9 D1", "Learn", "Low-fidelity paper wireframing"],
-                [
-                  "W9 D2",
-                  "Learn",
-                  "Mid-fidelity grayscale wireframes in Figma",
-                ],
-                ["W9 D3", "Learn", "Content blocking and layout planning"],
-                ["W9 D4", "Prac", "Sketch mobile workflow concepts"],
-                ["W9 D5", "Goal", "Build strong layouts before styling"],
+                {
+                  type: "Theory",
+                  text: "Re-render Boundaries: Study how React Hook Form separates input fields to stop full-page redraws.",
+                },
+                {
+                  type: "Code",
+                  text: "Zod Blueprint Shapes: Build strict object validation schemas checking accurate email and string layouts.",
+                },
+                {
+                  type: "Code",
+                  text: "Hook Form Resolvers: Feed Zod verification engines directly into front-end form handlers.",
+                },
+                {
+                  type: "Build",
+                  text: "Profile Edit Interface: Construct a multi-field form displaying inline runtime error messages.",
+                },
+                {
+                  type: "Review",
+                  text: "Form Integrity Audit: Verify invalid submissions are blocked before data travels over the network.",
+                },
               ],
             },
-
             {
-              title: "Week 10 — Interactive Prototypes & Testing",
+              title: "Week 6 — Layered Controller Architecture (Node/Express)",
               tasks: [
-                ["W10 D1", "Learn", "Interactive prototype building"],
-                ["W10 D2", "Learn", "Micro-interactions and transition design"],
-                ["W10 D3", "Learn", "User testing and observation sessions"],
-                ["W10 D4", "Prac", "Test prototypes with real users"],
-                ["W10 D5", "Watch", "Track user confusion and friction points"],
+                {
+                  type: "Theory",
+                  text: "Layered Responsibility Design: Learn why decoupling route paths from internal database lookups blocks technical debt.",
+                },
+                {
+                  type: "Code",
+                  text: "Controller Extraction: Move inline (req, res) logic blocks out of routes into separate controller files.",
+                },
+                {
+                  type: "Code",
+                  text: "Service Layer Decoupling: Write pure database lookups without relying directly on Express objects.",
+                },
+                {
+                  type: "Code",
+                  text: "Central Express Error Catching: Create a global async catch handler using (err, req, res, next).",
+                },
+                {
+                  type: "Code",
+                  text: "Route Exception Forwarding: Update controller error catches to forward failures using next(error).",
+                },
               ],
             },
-
             {
-              title: "Week 11 — Design Systems & Components",
+              title: "Week 7 — Advanced NoSQL Data Modeling & Aggregations",
               tasks: [
-                ["W11 D1", "Learn", "Component systems and atomic design"],
-                ["W11 D2", "Learn", "Design tokens and variable management"],
-                ["W11 D3", "Learn", "Reusable interface systems"],
-                ["W11 D4", "Learn", "Documenting style guides for developers"],
-                ["W11 D5", "Prac", "Create your own reusable UI kit"],
+                {
+                  type: "Theory",
+                  text: "Document Structural Strategy: Evaluate trade-offs of embedding child data vs collection references.",
+                },
+                {
+                  type: "Code",
+                  text: "Mongoose Population Maps: Build relational ties using Schema.Types.ObjectId keys across populate() queries.",
+                },
+                {
+                  type: "Theory",
+                  text: "Aggregation Pipelines: Learn how multi-stage arrays filter and reshape collection streams.",
+                },
+                {
+                  type: "Code",
+                  text: "Pipeline Engineering: Write queries using $match and $group to compute filtered statistics.",
+                },
+                {
+                  type: "Code",
+                  text: "Database Index Speed-ups: Set up indices on high-volume lookups to optimize processing time.",
+                },
               ],
             },
-
             {
-              title: "Week 12 — Accessibility & Responsiveness",
+              title: "Week 8 — Token Lifecycles & HttpOnly Cookie Security",
               tasks: [
-                [
-                  "W12 D1",
-                  "Learn",
-                  "Accessibility for screen readers and devices",
-                ],
-                ["W12 D2", "Learn", "WCAG AA/AAA contrast compliance"],
-                ["W12 D3", "Learn", "Responsive typography scaling"],
-                ["W12 D4", "Learn", "Responsive breakpoint systems"],
-                [
-                  "W12 D5",
-                  "Goal",
-                  "Build fully responsive accessible interfaces",
-                ],
+                {
+                  type: "Theory",
+                  text: "Token Exploit Vulnerabilities: Study how local storage exposes scripts to XSS attacks.",
+                },
+                {
+                  type: "Code",
+                  text: "Short-Lived Access Tokens: Sign brief 15-minute verification payloads inside JWT utilities.",
+                },
+                {
+                  type: "Code",
+                  text: "Secure Cookie Delivery: Pass refresh keys using express responses with active httpOnly settings.",
+                },
+                {
+                  type: "Code",
+                  text: "Token Rotation Endpoint: Code a /refresh path that verifies cookies for new access strings.",
+                },
+                {
+                  type: "Code",
+                  text: "Auth Shield Middleware: Intercept requests to check auth tokens and populate req.user.",
+                },
               ],
             },
           ],
         },
 
         {
-          label: "Month 4",
-          title: "Case Studies, Portfolio & Career Launch",
-          note: "Package your UI/UX skills into portfolio-ready projects and prepare for real-world opportunities.",
-          sections: [
+          month: "Month 3",
+          title: "Server Hardening Protocols & Static Typed Backends",
+          note: "Protect public endpoints against malicious traffic injections before transitioning into type-safe environments.",
+          weeks: [
             {
-              title: "Week 13 — Case Study Foundations",
+              title: "Week 9 — Production Server Hardening Protocols",
               tasks: [
-                ["W13 D1", "Create", "Build a mobile app redesign case study"],
-                ["W13 D2", "Create", "Create a landing page case study"],
-                ["W13 D3", "Create", "Design a dashboard analytics case study"],
-                ["W13 D4", "Include", "Document user research and pain points"],
-                ["W13 D5", "Include", "Show wireframes and UI iterations"],
+                {
+                  type: "Theory",
+                  text: "Cross-Origin Resource Sharing: Learn how browsers read headers to prevent unsafe lookups.",
+                },
+                {
+                  type: "Code",
+                  text: "CORS Origin Control: Lock down cross-origin entry points using whitelist arrays.",
+                },
+                {
+                  type: "Code",
+                  text: "Helmet Protection Layers: Protect headers against XSS risks using helmet middleware.",
+                },
+                {
+                  type: "Code",
+                  text: "API Request Rate Limiting: Use express-rate-limit to restrict excessive requests.",
+                },
+                {
+                  type: "Debug",
+                  text: "Security Header Audits: Use curl or terminal tools to verify active defensive headers.",
+                },
               ],
             },
-
             {
-              title: "Week 14 — Portfolio Finalization",
+              title: "Week 10 — Multi-part Media File Stream Management",
               tasks: [
-                ["W14 D1", "Include", "Interactive prototype links"],
-                ["W14 D2", "Include", "Reflection and design decisions"],
-                ["W14 D3", "Use", "Publish work to Behance and Dribbble"],
-                ["W14 D4", "Use", "Build your personal portfolio website"],
-                ["W14 D5", "Goal", "Maintain 3–5 strong case studies"],
+                {
+                  type: "Theory",
+                  text: "Multipart Data Architecture: Understand how binary asset data streams over HTTP.",
+                },
+                {
+                  type: "Code",
+                  text: "Multer Memory Processing: Capture uploads directly into memory buffers.",
+                },
+                {
+                  type: "Theory",
+                  text: "Cloud Asset Architectures: Evaluate why cloud storage platforms outperform raw disk spaces.",
+                },
+                {
+                  type: "Code",
+                  text: "Cloudinary SDK Upload Pipelines: Stream memory buffers directly to Cloudinary.",
+                },
+                {
+                  type: "Build",
+                  text: "Avatar Document Matching: Commit cloud URLs into mongoose user entries.",
+                },
               ],
             },
-
             {
-              title: "Week 15 — Developer Handoff & Speed Drills",
+              title: "Week 11 — Enterprise TypeScript Foundational Core",
               tasks: [
-                ["W15 D1", "Learn", "Developer collaboration workflows"],
-                ["W15 D2", "Learn", "Design handoff and asset exports"],
-                ["W15 D3", "Learn", "Agile teamwork and task management"],
-                ["W15 D4", "Prac", "Complete Daily UI speed challenges"],
-                ["W15 D5", "Prac", "Share designs publicly for critique"],
+                {
+                  type: "Theory",
+                  text: "The Type Compilation Lifecycle: Learn how TS protects compilation environments.",
+                },
+                {
+                  type: "Code",
+                  text: "Primitive Typing Configurations: Define explicit string, numeric, and array fields.",
+                },
+                {
+                  type: "Code",
+                  text: "Interface Architecture Structures: Build explicit type contracts with optional properties.",
+                },
+                {
+                  type: "Code",
+                  text: "Union and Intersection Layouts: Mix data blueprints using | and &.",
+                },
+                {
+                  type: "Code",
+                  text: "tsconfig Safety Rules: Turn on strict compiler rules like noImplicitAny.",
+                },
               ],
             },
-
             {
-              title: "Week 16 — Career Readiness & Freelancing",
+              title: "Week 12 — Type-Safe Express Environments",
               tasks: [
-                ["W16 D1", "Learn", "Optimize your UI/UX resume and portfolio"],
-                ["W16 D2", "Learn", "Prepare for UI/UX interviews"],
-                ["W16 D3", "Learn", "Set up LinkedIn and freelance profiles"],
-                ["W16 D4", "Prac", "Apply for internships and freelance gigs"],
-                ["W16 D5", "Goal", "Launch your UI/UX design career"],
+                {
+                  type: "Theory",
+                  text: "External Ambient Typing Packages: Learn why @types packages are important.",
+                },
+                {
+                  type: "Code",
+                  text: "Express Route Typing Contracts: Assign strict Request and Response interfaces.",
+                },
+                {
+                  type: "Code",
+                  text: "Generics URL Typing: Enforce strict structural types on req.params.id.",
+                },
+                {
+                  type: "Code",
+                  text: "Zod Runtime Assertions: Match incoming network request bodies directly to TS rules.",
+                },
+                {
+                  type: "Code",
+                  text: "Safe Auth Request Extensions: Expand express definitions to handle typed req.user.",
+                },
+              ],
+            },
+          ],
+        },
+
+        {
+          month: "Month 4",
+          title: "Type-Safe UI, Real-Time WebSockets & Production DevOps",
+          note: "Add complete type safety to the frontend, establish duplex sockets, and deploy to production.",
+          weeks: [
+            {
+              title:
+                "Week 13 — TypeScript Architecture Inside React Components",
+              tasks: [
+                {
+                  type: "Theory",
+                  text: "Component Prop Verification Contracts: Eliminate cross-file data passing bugs.",
+                },
+                {
+                  type: "Code",
+                  text: "Prop Type Configuration: Design component blueprints supporting primitive inputs.",
+                },
+                {
+                  type: "Code",
+                  text: "Hook Generics Integrations: Add type definitions to hooks like useState<IUser>.",
+                },
+                {
+                  type: "Code",
+                  text: "DOM Event Handler Definitions: Secure data input using exact event typings.",
+                },
+                {
+                  type: "Debug",
+                  text: "Compiler Evaluation Check: Run tsc --noEmit to solve type errors.",
+                },
+              ],
+            },
+            {
+              title: "Week 14 — Bidirectional Real-Time WebSockets (Socket.io)",
+              tasks: [
+                {
+                  type: "Theory",
+                  text: "Full-Duplex Sockets: Learn how persistent TCP socket routes outperform HTTP loops.",
+                },
+                {
+                  type: "Code",
+                  text: "Server Socket Bootstrapping: Mount a production-grade Socket.io server.",
+                },
+                {
+                  type: "Code",
+                  text: "TypeScript Connection Rules: Type-check socket data packets.",
+                },
+                {
+                  type: "Code",
+                  text: "Multiroom Communication Spaces: Group socket instances using socket.join(roomId).",
+                },
+                {
+                  type: "Code",
+                  text: "Frontend Connection Hooks: Wire type-safe socket.on() handlers into React.",
+                },
+              ],
+            },
+            {
+              title: "Week 15 — Real-Time Messaging App Integration",
+              tasks: [
+                {
+                  type: "Build",
+                  text: "Real-Time Layout Design: Build a message feed panel and room selector.",
+                },
+                {
+                  type: "Build",
+                  text: "Live Connection Badges: Update connection indicators instantly.",
+                },
+                {
+                  type: "Build",
+                  text: "Message Delivery Pipelines: Broadcast text packets across socket links.",
+                },
+                {
+                  type: "Build",
+                  text: "Optimized Feed Redraws: Keep chat feeds scrolling smoothly.",
+                },
+                {
+                  type: "Review",
+                  text: "Simulated Sync Assessment: Verify synchronization across multiple browsers.",
+                },
+              ],
+            },
+            {
+              title: "Week 16 — Production DevOps & Cloud Launch Architecture",
+              tasks: [
+                {
+                  type: "Build",
+                  text: "Database Cluster Configuration: Create a cloud database instance on MongoDB Atlas.",
+                },
+                {
+                  type: "Build",
+                  text: "API Cloud Deployment: Deploy Express onto Render or Railway.",
+                },
+                {
+                  type: "Build",
+                  text: "React Web App Bundling: Host the frontend build on Vercel.",
+                },
+                {
+                  type: "Build",
+                  text: "Secure Variable Injection: Protect secrets using environment variables.",
+                },
+                {
+                  type: "Goal",
+                  text: "Final Production Sign-Off: Run end-to-end tests across live URLs.",
+                },
               ],
             },
           ],
@@ -799,10 +945,12 @@
       function getCategoryClass(type) {
         const lower = type.toLowerCase();
 
-        if (lower === "learn") return "cat-learn";
-        if (lower === "prac") return "cat-prac";
+        if (lower === "theory") return "cat-learn";
+        if (lower === "code") return "cat-prac";
         if (lower === "build") return "cat-build";
         if (lower === "review") return "cat-review";
+        if (lower === "debug") return "cat-review";
+
         return "cat-goal";
       }
 
@@ -812,55 +960,68 @@
           monthEl.className = "month";
 
           let html = `
-          <div class="month-header">
-            <div class="month-label">${month.label}</div>
-            <h2 class="month-title">${month.title}</h2>
-            <p class="month-note">${month.note}</p>
-          </div>
+      <div class="month-header">
+        <div class="month-label">${month.month}</div>
+        <h2 class="month-title">${month.title}</h2>
+        <p class="month-note">${month.note}</p>
+      </div>
 
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Done</th>
-                  <th>Day</th>
-                  <th>Type</th>
-                  <th>Task</th>
-                </tr>
-              </thead>
-              <tbody>
-        `;
-
-          month.sections.forEach((section, sectionIndex) => {
-            html += `
-            <tr class="section-row">
-              <td colspan="4">${section.title}</td>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Done</th>
+              <th>Week</th>
+              <th>Type</th>
+              <th>Task</th>
             </tr>
-          `;
+          </thead>
+          <tbody>
+    `;
 
-            section.tasks.forEach((task, taskIndex) => {
-              const taskId = `task-${monthIndex}-${sectionIndex}-${taskIndex}`;
+          month.weeks.forEach((week, weekIndex) => {
+            html += `
+        <tr class="section-row">
+          <td colspan="4">${week.title}</td>
+        </tr>
+      `;
+
+            week.tasks.forEach((task, taskIndex) => {
+              const taskId = `task-${monthIndex}-${weekIndex}-${taskIndex}`;
 
               html += `
-              <tr>
-                <td class="checkbox-cell">
-                  <input type="checkbox" class="task-checkbox" id="${taskId}" />
-                </td>
-                <td>
-                  <span class="week-badge">${task[0]}</span>
-                </td>
-                <td>
-                  <span class="cat ${getCategoryClass(task[1])}">
-                    ${task[1]}
-                  </span>
-                </td>
-                <td>${task[2]}</td>
-              </tr>
-            `;
+          <tr>
+            <td class="checkbox-cell">
+              <input 
+                type="checkbox" 
+                class="task-checkbox" 
+                id="${taskId}" 
+              />
+            </td>
+
+            <td>
+              <span class="week-badge">
+                Week ${weekIndex + 1}
+              </span>
+            </td>
+
+            <td>
+              <span class="cat ${getCategoryClass(task.type)}">
+                ${task.type}
+              </span>
+            </td>
+
+            <td>${task.text}</td>
+          </tr>
+        `;
             });
           });
 
-          html += `</tbody></table></div>`;
+          html += `
+          </tbody>
+        </table>
+      </div>
+    `;
 
           monthEl.innerHTML = html;
           container.appendChild(monthEl);
