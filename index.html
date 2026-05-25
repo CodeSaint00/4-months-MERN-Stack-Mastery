@@ -1,600 +1,818 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MERN Stack Mastery Tracker</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MERN Stack Mastery Tracker</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="./img/скрипт-removebg-preview.png" />
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    :root {
-      --bg: #0f172a;
-      --card: rgba(15, 23, 42, 0.75);
-      --card-border: rgba(255,255,255,0.08);
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --primary: #38bdf8;
-      --primary-2: #8b5cf6;
-      --success: #22c55e;
-      --glass: rgba(255,255,255,0.04);
-      --shadow: 0 20px 50px rgba(0,0,0,0.45);
-    }
+      :root {
+        --bg: #0f172a;
+        --card: rgba(15, 23, 42, 0.75);
+        --card-border: rgba(255, 255, 255, 0.08);
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --primary: #38bdf8;
+        --primary-2: #8b5cf6;
+        --success: #22c55e;
+        --glass: rgba(255, 255, 255, 0.04);
+        --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(56,189,248,0.18), transparent 25%),
-        radial-gradient(circle at top right, rgba(139,92,246,0.18), transparent 25%),
-        var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 24px;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: auto;
-    }
-
-    .hero {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(18px);
-      border-radius: 28px;
-      padding: 36px;
-      box-shadow: var(--shadow);
-      margin-bottom: 28px;
-      top: 18px;
-      z-index: 100;
-    }
-
-    .hero-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 4vw, 3.4rem);
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.1;
-      margin-bottom: 12px;
-      background: linear-gradient(90deg, #fff, #38bdf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      color: var(--muted);
-      max-width: 800px;
-      font-size: 1rem;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(120px, 1fr));
-      gap: 14px;
-      margin-top: 26px;
-    }
-
-    .stat-card {
-      background: var(--glass);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 18px;
-      padding: 18px;
-    }
-
-    .stat-card h3 {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 10px;
-      font-weight: 500;
-    }
-
-    .stat-card strong {
-      font-size: 2rem;
-      display: block;
-      font-weight: 800;
-    }
-
-    .progress-section {
-      margin-top: 28px;
-    }
-
-    .progress-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      font-weight: 600;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .progress-bar {
-      width: 100%;
-      height: 16px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 999px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--primary), var(--primary-2));
-      transition: width 0.35s ease;
-      position: relative;
-    }
-
-    .progress-fill::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        45deg,
-        rgba(255,255,255,0.15) 25%,
-        transparent 25%,
-        transparent 50%,
-        rgba(255,255,255,0.15) 50%,
-        rgba(255,255,255,0.15) 75%,
-        transparent 75%,
-        transparent
-      );
-      background-size: 24px 24px;
-      animation: move 1s linear infinite;
-    }
-
-    @keyframes move {
-      from { background-position: 0 0; }
-      to { background-position: 24px 0; }
-    }
-
-    .months {
-      display: grid;
-      gap: 26px;
-    }
-
-    .month {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 28px;
-      overflow: hidden;
-      backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
-    }
-
-    .month-header {
-      padding: 28px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent);
-    }
-
-    .month-label {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(56,189,248,0.12);
-      border: 1px solid rgba(56,189,248,0.2);
-      color: #7dd3fc;
-      font-size: 0.8rem;
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-
-    .month-title {
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .month-note {
-      color: var(--muted);
-      max-width: 900px;
-    }
-
-    .table-wrapper {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 860px;
-    }
-
-    thead {
-      background: rgba(255,255,255,0.03);
-    }
-
-    thead th {
-      padding: 16px;
-      text-align: left;
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    tbody tr {
-      border-top: 1px solid rgba(255,255,255,0.05);
-      transition: 0.2s ease;
-    }
-
-    tbody tr:hover {
-      background: rgba(255,255,255,0.03);
-    }
-
-    td {
-      padding: 18px 16px;
-      vertical-align: top;
-    }
-
-    .section-row td {
-      background: rgba(255,255,255,0.04);
-      color: #cbd5e1;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-size: 0.78rem;
-      padding: 14px 16px;
-    }
-
-    .week-badge {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: #fff;
-      padding: 8px 12px;
-      border-radius: 12px;
-      font-size: 0.8rem;
-      display: inline-block;
-      white-space: nowrap;
-      font-weight: 600;
-    }
-
-    .cat {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      white-space: nowrap;
-      border: 1px solid transparent;
-    }
-
-    .cat-learn {
-      background: rgba(56,189,248,0.14);
-      color: #7dd3fc;
-      border-color: rgba(56,189,248,0.2);
-    }
-
-    .cat-prac {
-      background: rgba(34,197,94,0.14);
-      color: #86efac;
-      border-color: rgba(34,197,94,0.2);
-    }
-
-    .cat-build {
-      background: rgba(168,85,247,0.14);
-      color: #d8b4fe;
-      border-color: rgba(168,85,247,0.2);
-    }
-
-    .cat-review {
-      background: rgba(249,115,22,0.14);
-      color: #fdba74;
-      border-color: rgba(249,115,22,0.2);
-    }
-
-    .cat-goal,
-    .cat-use {
-      background: rgba(250,204,21,0.14);
-      color: #fde68a;
-      border-color: rgba(250,204,21,0.2);
-    }
-
-    .checkbox-cell {
-      text-align: center;
-      width: 60px;
-    }
-
-    .task-checkbox {
-      appearance: none;
-      width: 24px;
-      height: 24px;
-      border-radius: 8px;
-      border: 2px solid rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.04);
-      cursor: pointer;
-      transition: all 0.25s ease;
-      position: relative;
-    }
-
-    .task-checkbox:checked {
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      border-color: transparent;
-      transform: scale(1.05);
-    }
-
-    .task-checkbox:checked::after {
-      content: '✓';
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      color: white;
-      font-weight: 700;
-    }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 22px;
-      padding: 26px;
-    }
-
-    .skills-grid table {
-      min-width: auto;
-      border-radius: 18px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.03);
-    }
-
-    .reset-btn {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      border: none;
-      color: white;
-      padding: 14px 18px;
-      border-radius: 16px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: 0.25s ease;
-      font-size: 0.95rem;
-    }
-
-    .reset-btn:hover {
-      transform: translateY(-2px);
-      opacity: 0.95;
-    }
-
-    .streak-pill {
-      background: rgba(34,197,94,0.14);
-      border: 1px solid rgba(34,197,94,0.2);
-      color: #86efac;
-      padding: 12px 16px;
-      border-radius: 16px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    @media (max-width: 900px) {
       body {
-        padding: 16px;
+        font-family: "Inter", sans-serif;
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(56, 189, 248, 0.18),
+            transparent 25%
+          ),
+          radial-gradient(
+            circle at top right,
+            rgba(139, 92, 246, 0.18),
+            transparent 25%
+          ),
+          var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 24px;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: auto;
       }
 
       .hero {
-        padding: 24px;
-        position: relative;
-        top: 0;
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        backdrop-filter: blur(18px);
+        border-radius: 28px;
+        padding: 36px;
+        box-shadow: var(--shadow);
+        margin-bottom: 28px;
+        top: 18px;
+        z-index: 100;
+      }
+
+      .hero-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .hero h1 {
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        font-weight: 800;
+        letter-spacing: -1px;
+        line-height: 1.1;
+        margin-bottom: 12px;
+        background: linear-gradient(90deg, #fff, #38bdf8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hero p {
+        color: var(--muted);
+        max-width: 800px;
+        font-size: 1rem;
       }
 
       .stats {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(120px, 1fr));
+        gap: 14px;
+        margin-top: 26px;
+      }
+
+      .stat-card {
+        background: var(--glass);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 18px;
+        padding: 18px;
+      }
+
+      .stat-card h3 {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      .stat-card strong {
+        font-size: 2rem;
+        display: block;
+        font-weight: 800;
+      }
+
+      .progress-section {
+        margin-top: 28px;
+      }
+
+      .progress-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        font-weight: 600;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 16px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 999px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--primary), var(--primary-2));
+        transition: width 0.35s ease;
+        position: relative;
+      }
+
+      .progress-fill::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.15) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba(255, 255, 255, 0.15) 50%,
+          rgba(255, 255, 255, 0.15) 75%,
+          transparent 75%,
+          transparent
+        );
+        background-size: 24px 24px;
+        animation: move 1s linear infinite;
+      }
+
+      @keyframes move {
+        from {
+          background-position: 0 0;
+        }
+        to {
+          background-position: 24px 0;
+        }
+      }
+
+      .months {
+        display: grid;
+        gap: 26px;
+      }
+
+      .month {
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        border-radius: 28px;
+        overflow: hidden;
+        backdrop-filter: blur(14px);
+        box-shadow: var(--shadow);
       }
 
       .month-header {
-        padding: 22px;
+        padding: 28px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.04),
+          transparent
+        );
       }
 
-      td, th {
-        padding: 14px 12px;
+      .month-label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(56, 189, 248, 0.12);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        color: #7dd3fc;
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-bottom: 14px;
       }
-    }
 
-    @media (max-width: 640px) {
-      .hero-top {
-        flex-direction: column;
-        align-items: flex-start;
+      .month-title {
+        font-size: clamp(1.4rem, 3vw, 2rem);
+        font-weight: 800;
+        margin-bottom: 10px;
+      }
+
+      .month-note {
+        color: var(--muted);
+        max-width: 900px;
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 860px;
+      }
+
+      thead {
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      thead th {
+        padding: 16px;
+        text-align: left;
+        color: var(--muted);
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      tbody tr {
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        transition: 0.2s ease;
+      }
+
+      tbody tr:hover {
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      td {
+        padding: 18px 16px;
+        vertical-align: top;
+      }
+
+      .section-row td {
+        background: rgba(255, 255, 255, 0.04);
+        color: #cbd5e1;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 0.78rem;
+        padding: 14px 16px;
+      }
+
+      .week-badge {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        display: inline-block;
+        white-space: nowrap;
+        font-weight: 600;
+      }
+
+      .cat {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        white-space: nowrap;
+        border: 1px solid transparent;
+      }
+
+      .cat-learn {
+        background: rgba(56, 189, 248, 0.14);
+        color: #7dd3fc;
+        border-color: rgba(56, 189, 248, 0.2);
+      }
+
+      .cat-prac {
+        background: rgba(34, 197, 94, 0.14);
+        color: #86efac;
+        border-color: rgba(34, 197, 94, 0.2);
+      }
+
+      .cat-build {
+        background: rgba(168, 85, 247, 0.14);
+        color: #d8b4fe;
+        border-color: rgba(168, 85, 247, 0.2);
+      }
+
+      .cat-review {
+        background: rgba(249, 115, 22, 0.14);
+        color: #fdba74;
+        border-color: rgba(249, 115, 22, 0.2);
+      }
+
+      .cat-goal,
+      .cat-use {
+        background: rgba(250, 204, 21, 0.14);
+        color: #fde68a;
+        border-color: rgba(250, 204, 21, 0.2);
+      }
+
+      .checkbox-cell {
+        text-align: center;
+        width: 60px;
+      }
+
+      .task-checkbox {
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.04);
+        cursor: pointer;
+        transition: all 0.25s ease;
+        position: relative;
+      }
+
+      .task-checkbox:checked {
+        background: linear-gradient(135deg, var(--primary), var(--primary-2));
+        border-color: transparent;
+        transform: scale(1.05);
+      }
+
+      .task-checkbox:checked::after {
+        content: "✓";
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        color: white;
+        font-weight: 700;
+      }
+
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 22px;
+        padding: 26px;
+      }
+
+      .skills-grid table {
+        min-width: auto;
+        border-radius: 18px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.03);
       }
 
       .reset-btn {
-        width: 100%;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        border: none;
+        color: white;
+        padding: 14px 18px;
+        border-radius: 16px;
+        cursor: pointer;
+        font-weight: 700;
+        transition: 0.25s ease;
+        font-size: 0.95rem;
+      }
+
+      .reset-btn:hover {
+        transform: translateY(-2px);
+        opacity: 0.95;
       }
 
       .streak-pill {
-        width: 100%;
-        justify-content: center;
+        background: rgba(34, 197, 94, 0.14);
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        color: #86efac;
+        padding: 12px 16px;
+        border-radius: 16px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
-    }
-  </style>
-</head>
-<body>
 
-  <div class="container">
+      @media (max-width: 900px) {
+        body {
+          padding: 16px;
+        }
 
-    <section class="hero">
-      <div class="hero-top">
-        <div>
-          <h1>MERN Stack Mastery</h1>
-          <p>
-            A modern interactive curriculum tracker with saved progress, streak tracking,
-            responsive layout, and automatic persistence using local storage.
-          </p>
+        .hero {
+          padding: 24px;
+          position: relative;
+          top: 0;
+        }
+
+        .stats {
+          grid-template-columns: 1fr;
+        }
+
+        .month-header {
+          padding: 22px;
+        }
+
+        td,
+        th {
+          padding: 14px 12px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero-top {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .reset-btn {
+          width: 100%;
+        }
+
+        .streak-pill {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <section class="hero">
+        <div class="hero-top">
+          <div>
+            <h1>MERN Stack Mastery</h1>
+            <p>
+              A modern interactive curriculum tracker with saved progress,
+              streak tracking, responsive layout, and automatic persistence
+              using local storage.
+            </p>
+          </div>
+
+          <button class="reset-btn" onclick="resetProgress()">
+            Reset Progress
+          </button>
         </div>
 
-        <button class="reset-btn" onclick="resetProgress()">
-          Reset Progress
-        </button>
-      </div>
+        <div class="stats">
+          <div class="stat-card">
+            <h3>Completed Tasks</h3>
+            <strong id="completedCount">0</strong>
+          </div>
 
-      <div class="stats">
-        <div class="stat-card">
-          <h3>Completed Tasks</h3>
-          <strong id="completedCount">0</strong>
-        </div>
+          <div class="stat-card">
+            <h3>Total Tasks</h3>
+            <strong id="totalCount">0</strong>
+          </div>
 
-        <div class="stat-card">
-          <h3>Total Tasks</h3>
-          <strong id="totalCount">0</strong>
-        </div>
-
-        <div class="stat-card">
-          <h3>Progress</h3>
-          <strong id="progressPercent">0%</strong>
-        </div>
-      </div>
-
-      <div class="progress-section">
-        <div class="progress-header">
-          <span>Overall Progress</span>
-          <div class="streak-pill">
-            🔥 <span id="streakCount">0 Day Streak</span>
+          <div class="stat-card">
+            <h3>Progress</h3>
+            <strong id="progressPercent">0%</strong>
           </div>
         </div>
 
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
+        <div class="progress-section">
+          <div class="progress-header">
+            <span>Overall Progress</span>
+            <div class="streak-pill">
+              🔥 <span id="streakCount">0 Day Streak</span>
+            </div>
+          </div>
+
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <div class="months" id="monthsContainer"></div>
+      <div class="months" id="monthsContainer"></div>
+    </div>
 
-  </div>
+    <script>
+      const curriculum = [
+        {
+          label: "Month 1",
+          title: "Foundations, Interface Principles & Figma Mastery",
+          note: "Build correct habits with deep product thinking, basic element theory, and muscle memory configurations inside Figma.",
+          sections: [
+            {
+              title: "Week 1 — UI/UX Core Concepts & Product Thinking",
+              tasks: [
+                [
+                  "W1 D1",
+                  "Learn",
+                  "What UI is (User Interfaces as presentation layers)",
+                ],
+                [
+                  "W1 D2",
+                  "Learn",
+                  "What UX is (User Experience as friction optimization and workflows)",
+                ],
+                [
+                  "W1 D3",
+                  "Learn",
+                  "Product thinking (Balancing user goals with business KPIs)",
+                ],
+                [
+                  "W1 D4",
+                  "Learn",
+                  "Difference between UI, UX & Product Design operational scopes",
+                ],
+                [
+                  "W1 D5",
+                  "Understand",
+                  "Why users behave the way they do (Cognitive load limits & behaviors)",
+                ],
+              ],
+            },
 
-  <script>
-    const curriculum = [
-      {
-        label: 'Month 1',
-        title: 'Advanced React Framework Architecture',
-        note: 'Master how React coordinates DOM updates, server caches, and performance systems.',
-        sections: [
-          {
-            title: 'Week 1 — React Internals & Custom Hooks',
-            tasks: [
-              ['W1 D1', 'Learn', 'Study React Fiber Tree and Virtual DOM diffing.'],
-              ['W1 D2', 'Learn', 'Master useMemo and optimize expensive renders.'],
-              ['W1 D3', 'Learn', 'Understand useCallback and reference equality.'],
-              ['W1 D4', 'Learn', 'Build persistent systems with useRef.'],
-              ['W1 D5', 'Prac', 'Create reusable custom hooks library.']
-            ]
-          },
-          {
-            title: 'Week 2 — Redux Toolkit',
-            tasks: [
-              ['W2 D1', 'Learn', 'Understand global state architecture.'],
-              ['W2 D2', 'Learn', 'Configure Redux Toolkit slices and reducers.'],
-              ['W2 D3', 'Learn', 'Handle async workflows using createAsyncThunk.'],
-              ['W2 D4', 'Prac', 'Refactor a prop-drilling app to Redux Toolkit.'],
-              ['W2 D5', 'Review', 'Inspect dispatched actions using Redux DevTools.']
-            ]
-          }
-        ]
-      },
-      {
-        label: 'Month 2',
-        title: 'Backend Architecture & MongoDB',
-        note: 'Build scalable APIs with security, database optimization, and layered architecture.',
-        sections: [
-          {
-            title: 'Week 5 — Architecture Patterns',
-            tasks: [
-              ['W5 D1', 'Learn', 'Study layered backend architecture principles.'],
-              ['W5 D2', 'Learn', 'Separate controllers from services.'],
-              ['W5 D3', 'Learn', 'Build centralized error handling systems.'],
-              ['W5 D4', 'Prac', 'Restructure a legacy Express project.'],
-              ['W5 D5', 'Review', 'Trace request lifecycle across the backend.']
-            ]
-          },
-          {
-            title: 'Week 6 — MongoDB & Aggregations',
-            tasks: [
-              ['W6 D1', 'Learn', 'Master schema modeling techniques.'],
-              ['W6 D2', 'Learn', 'Practice aggregation pipelines.'],
-              ['W6 D3', 'Learn', 'Use advanced joins and group calculations.'],
-              ['W6 D4', 'Learn', 'Optimize databases with indexing strategies.'],
-              ['W6 D5', 'Prac', 'Create real-time analytical reports.']
-            ]
-          }
-        ]
-      },
-      {
-        label: 'Month 3',
-        title: 'TypeScript Full Stack Integration',
-        note: 'Eliminate runtime errors with strict type-safe workflows.',
-        sections: [
-          {
-            title: 'Week 9 — TypeScript Basics',
-            tasks: [
-              ['W9 D1', 'Learn', 'Learn foundational TypeScript types.'],
-              ['W9 D2', 'Learn', 'Master union and intersection types.'],
-              ['W9 D3', 'Learn', 'Write reusable generic systems.'],
-              ['W9 D4', 'Prac', 'Configure strict tsconfig rules.'],
-              ['W9 D5', 'Prac', 'Refactor JavaScript helpers into TypeScript.']
-            ]
-          }
-        ]
-      },
-      {
-        label: 'Month 4',
-        title: 'DevOps & Deployment',
-        note: 'Automate deployments, testing, Docker workflows, and production systems.',
-        sections: [
-          {
-            title: 'Week 13 — Testing & CI/CD',
-            tasks: [
-              ['W13 D1', 'Learn', 'Understand testing strategies and Jest.'],
-              ['W13 D2', 'Learn', 'Use Supertest for API integration tests.'],
-              ['W13 D3', 'Prac', 'Mock databases for isolated testing.'],
-              ['W13 D4', 'Build', 'Write authentication integration tests.'],
-              ['W13 D5', 'Goal', 'Measure and improve test coverage.']
-            ]
-          }
-        ]
+            {
+              title: "Week 2 — Visual Design Core Principles & Elements",
+              tasks: [
+                [
+                  "W2 D1",
+                  "Learn",
+                  "Design principles: Contrast, Alignment, and Hierarchy",
+                ],
+                [
+                  "W2 D2",
+                  "Learn",
+                  "Layout Balance, Repetition, and White Space",
+                ],
+                [
+                  "W2 D3",
+                  "Learn",
+                  "Color theory basics and emotional psychology",
+                ],
+                [
+                  "W2 D4",
+                  "Learn",
+                  "Accessibility and WCAG contrast guidelines",
+                ],
+                [
+                  "W2 D5",
+                  "Learn",
+                  "Typography pairing and readability systems",
+                ],
+              ],
+            },
+
+            {
+              title: "Week 3 — Figma Component Mechanics",
+              tasks: [
+                ["W3 D1", "Learn", "Frames vs Groups and layout structuring"],
+                ["W3 D2", "Learn", "Nested Auto Layout systems"],
+                ["W3 D3", "Learn", "Master Components and Variants"],
+                ["W3 D4", "Learn", "Responsive Constraints and Layout Grids"],
+                [
+                  "W3 D5",
+                  "Prac",
+                  "Build interactive prototypes with smart animations",
+                ],
+              ],
+            },
+
+            {
+              title: "Week 4 — Vector Mastery & Copy Work",
+              tasks: [
+                ["W4 D1", "Prac", "Recreate simple mobile UI screens daily"],
+                [
+                  "W4 D2",
+                  "Study",
+                  "Analyze spacing and layout patterns in modern apps",
+                ],
+                ["W4 D3", "Prac", "Copy Spotify interface layouts"],
+                ["W4 D4", "Prac", "Copy Instagram feed structures"],
+                [
+                  "W4 D5",
+                  "Goal",
+                  "Navigate and build in Figma without friction",
+                ],
+              ],
+            },
+          ],
+        },
+
+        {
+          label: "Month 2",
+          title: "Interface Layout Patterns & UX Research",
+          note: "Transition from isolated UI recreations into scalable UX systems and user research workflows.",
+          sections: [
+            {
+              title: "Week 5 — Layout Patterns & Mobile Components",
+              tasks: [
+                [
+                  "W5 D1",
+                  "Learn",
+                  "Mobile navigation patterns and floating actions",
+                ],
+                [
+                  "W5 D2",
+                  "Learn",
+                  "Responsive layouts for mobile, tablet, and desktop",
+                ],
+                ["W5 D3", "Learn", "8-point spacing system and layout rhythm"],
+                ["W5 D4", "Prac", "Design a responsive Login screen"],
+                ["W5 D5", "Prac", "Build a Signup onboarding flow"],
+              ],
+            },
+
+            {
+              title: "Week 6 — Real UI Layout Practice",
+              tasks: [
+                ["W6 D1", "Learn", "Shadows, elevation, cards, and UI depth"],
+                ["W6 D2", "Learn", "Modern visual hierarchy techniques"],
+                ["W6 D3", "Prac", "Design a dashboard analytics layout"],
+                ["W6 D4", "Prac", "Design a food delivery app homepage"],
+                ["W6 D5", "Prac", "Design a banking transaction screen"],
+              ],
+            },
+
+            {
+              title: "Week 7 — UX Research Fundamentals",
+              tasks: [
+                [
+                  "W7 D1",
+                  "Learn",
+                  "User interview structures and question framing",
+                ],
+                ["W7 D2", "Learn", "Surveys and validation methods"],
+                ["W7 D3", "Learn", "Competitive analysis and market audits"],
+                [
+                  "W7 D4",
+                  "Learn",
+                  "Identifying user pain points from research",
+                ],
+                [
+                  "W7 D5",
+                  "Understand",
+                  "Designing for user needs over personal taste",
+                ],
+              ],
+            },
+
+            {
+              title: "Week 8 — Information Architecture & User Flows",
+              tasks: [
+                ["W8 D1", "Learn", "User journey mapping and emotional flows"],
+                ["W8 D2", "Learn", "Navigation hierarchies and app structures"],
+                ["W8 D3", "Prac", "Create a food delivery service flowchart"],
+                ["W8 D4", "Prac", "Map a banking transaction workflow"],
+                ["W8 D5", "Prac", "Build an e-commerce checkout flow"],
+              ],
+            },
+          ],
+        },
+
+        {
+          label: "Month 3",
+          title: "Wireframing, Prototyping & Design Systems",
+          note: "Convert ideas into structured systems, interactive flows, and reusable UI architectures.",
+          sections: [
+            {
+              title: "Week 9 — Low & Mid Fidelity Wireframes",
+              tasks: [
+                ["W9 D1", "Learn", "Low-fidelity paper wireframing"],
+                [
+                  "W9 D2",
+                  "Learn",
+                  "Mid-fidelity grayscale wireframes in Figma",
+                ],
+                ["W9 D3", "Learn", "Content blocking and layout planning"],
+                ["W9 D4", "Prac", "Sketch mobile workflow concepts"],
+                ["W9 D5", "Goal", "Build strong layouts before styling"],
+              ],
+            },
+
+            {
+              title: "Week 10 — Interactive Prototypes & Testing",
+              tasks: [
+                ["W10 D1", "Learn", "Interactive prototype building"],
+                ["W10 D2", "Learn", "Micro-interactions and transition design"],
+                ["W10 D3", "Learn", "User testing and observation sessions"],
+                ["W10 D4", "Prac", "Test prototypes with real users"],
+                ["W10 D5", "Watch", "Track user confusion and friction points"],
+              ],
+            },
+
+            {
+              title: "Week 11 — Design Systems & Components",
+              tasks: [
+                ["W11 D1", "Learn", "Component systems and atomic design"],
+                ["W11 D2", "Learn", "Design tokens and variable management"],
+                ["W11 D3", "Learn", "Reusable interface systems"],
+                ["W11 D4", "Learn", "Documenting style guides for developers"],
+                ["W11 D5", "Prac", "Create your own reusable UI kit"],
+              ],
+            },
+
+            {
+              title: "Week 12 — Accessibility & Responsiveness",
+              tasks: [
+                [
+                  "W12 D1",
+                  "Learn",
+                  "Accessibility for screen readers and devices",
+                ],
+                ["W12 D2", "Learn", "WCAG AA/AAA contrast compliance"],
+                ["W12 D3", "Learn", "Responsive typography scaling"],
+                ["W12 D4", "Learn", "Responsive breakpoint systems"],
+                [
+                  "W12 D5",
+                  "Goal",
+                  "Build fully responsive accessible interfaces",
+                ],
+              ],
+            },
+          ],
+        },
+
+        {
+          label: "Month 4",
+          title: "Case Studies, Portfolio & Career Launch",
+          note: "Package your UI/UX skills into portfolio-ready projects and prepare for real-world opportunities.",
+          sections: [
+            {
+              title: "Week 13 — Case Study Foundations",
+              tasks: [
+                ["W13 D1", "Create", "Build a mobile app redesign case study"],
+                ["W13 D2", "Create", "Create a landing page case study"],
+                ["W13 D3", "Create", "Design a dashboard analytics case study"],
+                ["W13 D4", "Include", "Document user research and pain points"],
+                ["W13 D5", "Include", "Show wireframes and UI iterations"],
+              ],
+            },
+
+            {
+              title: "Week 14 — Portfolio Finalization",
+              tasks: [
+                ["W14 D1", "Include", "Interactive prototype links"],
+                ["W14 D2", "Include", "Reflection and design decisions"],
+                ["W14 D3", "Use", "Publish work to Behance and Dribbble"],
+                ["W14 D4", "Use", "Build your personal portfolio website"],
+                ["W14 D5", "Goal", "Maintain 3–5 strong case studies"],
+              ],
+            },
+
+            {
+              title: "Week 15 — Developer Handoff & Speed Drills",
+              tasks: [
+                ["W15 D1", "Learn", "Developer collaboration workflows"],
+                ["W15 D2", "Learn", "Design handoff and asset exports"],
+                ["W15 D3", "Learn", "Agile teamwork and task management"],
+                ["W15 D4", "Prac", "Complete Daily UI speed challenges"],
+                ["W15 D5", "Prac", "Share designs publicly for critique"],
+              ],
+            },
+
+            {
+              title: "Week 16 — Career Readiness & Freelancing",
+              tasks: [
+                ["W16 D1", "Learn", "Optimize your UI/UX resume and portfolio"],
+                ["W16 D2", "Learn", "Prepare for UI/UX interviews"],
+                ["W16 D3", "Learn", "Set up LinkedIn and freelance profiles"],
+                ["W16 D4", "Prac", "Apply for internships and freelance gigs"],
+                ["W16 D5", "Goal", "Launch your UI/UX design career"],
+              ],
+            },
+            git,
+          ],
+        },
+      ];
+      const container = document.getElementById("monthsContainer");
+
+      function getCategoryClass(type) {
+        const lower = type.toLowerCase();
+
+        if (lower === "learn") return "cat-learn";
+        if (lower === "prac") return "cat-prac";
+        if (lower === "build") return "cat-build";
+        if (lower === "review") return "cat-review";
+        return "cat-goal";
       }
-    ];
 
-    const container = document.getElementById('monthsContainer');
+      function renderCurriculum() {
+        curriculum.forEach((month, monthIndex) => {
+          const monthEl = document.createElement("div");
+          monthEl.className = "month";
 
-    function getCategoryClass(type) {
-      const lower = type.toLowerCase();
-
-      if (lower === 'learn') return 'cat-learn';
-      if (lower === 'prac') return 'cat-prac';
-      if (lower === 'build') return 'cat-build';
-      if (lower === 'review') return 'cat-review';
-      return 'cat-goal';
-    }
-
-    function renderCurriculum() {
-      curriculum.forEach((month, monthIndex) => {
-        const monthEl = document.createElement('div');
-        monthEl.className = 'month';
-
-        let html = `
+          let html = `
           <div class="month-header">
             <div class="month-label">${month.label}</div>
             <h2 class="month-title">${month.title}</h2>
@@ -614,17 +832,17 @@
               <tbody>
         `;
 
-        month.sections.forEach((section, sectionIndex) => {
-          html += `
+          month.sections.forEach((section, sectionIndex) => {
+            html += `
             <tr class="section-row">
               <td colspan="4">${section.title}</td>
             </tr>
           `;
 
-          section.tasks.forEach((task, taskIndex) => {
-            const taskId = `task-${monthIndex}-${sectionIndex}-${taskIndex}`;
+            section.tasks.forEach((task, taskIndex) => {
+              const taskId = `task-${monthIndex}-${sectionIndex}-${taskIndex}`;
 
-            html += `
+              html += `
               <tr>
                 <td class="checkbox-cell">
                   <input type="checkbox" class="task-checkbox" id="${taskId}" />
@@ -640,119 +858,118 @@
                 <td>${task[2]}</td>
               </tr>
             `;
+            });
           });
+
+          html += `</tbody></table></div>`;
+
+          monthEl.innerHTML = html;
+          container.appendChild(monthEl);
         });
-
-        html += `</tbody></table></div>`;
-
-        monthEl.innerHTML = html;
-        container.appendChild(monthEl);
-      });
-    }
-
-    renderCurriculum();
-
-    const checkboxes = document.querySelectorAll('.task-checkbox');
-    const completedCount = document.getElementById('completedCount');
-    const totalCount = document.getElementById('totalCount');
-    const progressPercent = document.getElementById('progressPercent');
-    const progressFill = document.getElementById('progressFill');
-    const streakCount = document.getElementById('streakCount');
-
-    totalCount.textContent = checkboxes.length;
-
-    function saveProgress() {
-      const progress = {};
-
-      checkboxes.forEach(box => {
-        progress[box.id] = box.checked;
-      });
-
-      localStorage.setItem('mern-progress', JSON.stringify(progress));
-
-      const today = new Date().toDateString();
-      localStorage.setItem('mern-last-active', today);
-
-      updateStreak();
-    }
-
-    function loadProgress() {
-      const saved = JSON.parse(localStorage.getItem('mern-progress') || '{}');
-
-      checkboxes.forEach(box => {
-        box.checked = !!saved[box.id];
-      });
-    }
-
-    function updateStats() {
-      const completed = [...checkboxes].filter(box => box.checked).length;
-      const total = checkboxes.length;
-      const percent = Math.round((completed / total) * 100);
-
-      completedCount.textContent = completed;
-      progressPercent.textContent = percent + '%';
-      progressFill.style.width = percent + '%';
-    }
-
-    function updateStreak() {
-      const today = new Date();
-      const todayString = today.toDateString();
-
-      const lastActive = localStorage.getItem('mern-last-streak-date');
-      let streak = parseInt(localStorage.getItem('mern-streak') || '0');
-
-      if (!lastActive) {
-        streak = 1;
-      } else {
-        const lastDate = new Date(lastActive);
-        const diff = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
-
-        if (diff === 1) {
-          streak += 1;
-        } else if (diff > 1) {
-          streak = 1;
-        }
       }
 
-      localStorage.setItem('mern-streak', streak);
-      localStorage.setItem('mern-last-streak-date', todayString);
+      renderCurriculum();
 
-      streakCount.textContent = `${streak} Day Streak`;
-    }
+      const checkboxes = document.querySelectorAll(".task-checkbox");
+      const completedCount = document.getElementById("completedCount");
+      const totalCount = document.getElementById("totalCount");
+      const progressPercent = document.getElementById("progressPercent");
+      const progressFill = document.getElementById("progressFill");
+      const streakCount = document.getElementById("streakCount");
 
-    function initializeStreak() {
-      const streak = localStorage.getItem('mern-streak') || '0';
-      streakCount.textContent = `${streak} Day Streak`;
-    }
+      totalCount.textContent = checkboxes.length;
 
-    checkboxes.forEach(box => {
-      box.addEventListener('change', () => {
-        saveProgress();
+      function saveProgress() {
+        const progress = {};
+
+        checkboxes.forEach((box) => {
+          progress[box.id] = box.checked;
+        });
+
+        localStorage.setItem("mern-progress", JSON.stringify(progress));
+
+        const today = new Date().toDateString();
+        localStorage.setItem("mern-last-active", today);
+
+        updateStreak();
+      }
+
+      function loadProgress() {
+        const saved = JSON.parse(localStorage.getItem("mern-progress") || "{}");
+
+        checkboxes.forEach((box) => {
+          box.checked = !!saved[box.id];
+        });
+      }
+
+      function updateStats() {
+        const completed = [...checkboxes].filter((box) => box.checked).length;
+        const total = checkboxes.length;
+        const percent = Math.round((completed / total) * 100);
+
+        completedCount.textContent = completed;
+        progressPercent.textContent = percent + "%";
+        progressFill.style.width = percent + "%";
+      }
+
+      function updateStreak() {
+        const today = new Date();
+        const todayString = today.toDateString();
+
+        const lastActive = localStorage.getItem("mern-last-streak-date");
+        let streak = parseInt(localStorage.getItem("mern-streak") || "0");
+
+        if (!lastActive) {
+          streak = 1;
+        } else {
+          const lastDate = new Date(lastActive);
+          const diff = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
+
+          if (diff === 1) {
+            streak += 1;
+          } else if (diff > 1) {
+            streak = 1;
+          }
+        }
+
+        localStorage.setItem("mern-streak", streak);
+        localStorage.setItem("mern-last-streak-date", todayString);
+
+        streakCount.textContent = `${streak} Day Streak`;
+      }
+
+      function initializeStreak() {
+        const streak = localStorage.getItem("mern-streak") || "0";
+        streakCount.textContent = `${streak} Day Streak`;
+      }
+
+      checkboxes.forEach((box) => {
+        box.addEventListener("change", () => {
+          saveProgress();
+          updateStats();
+        });
+      });
+
+      function resetProgress() {
+        const confirmed = confirm("Reset all saved progress and streaks?");
+
+        if (!confirmed) return;
+
+        localStorage.removeItem("mern-progress");
+        localStorage.removeItem("mern-streak");
+        localStorage.removeItem("mern-last-streak-date");
+
+        checkboxes.forEach((box) => {
+          box.checked = false;
+        });
+
+        initializeStreak();
         updateStats();
-      });
-    });
+      }
 
-    function resetProgress() {
-      const confirmed = confirm('Reset all saved progress and streaks?');
-
-      if (!confirmed) return;
-
-      localStorage.removeItem('mern-progress');
-      localStorage.removeItem('mern-streak');
-      localStorage.removeItem('mern-last-streak-date');
-
-      checkboxes.forEach(box => {
-        box.checked = false;
-      });
-
+      loadProgress();
       initializeStreak();
       updateStats();
-    }
-
-    loadProgress();
-    initializeStreak();
-    updateStats();
-  </script>
-
-</body>
+    </script>
+  </body>
 </html>
