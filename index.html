@@ -1,1135 +1,1041 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MERN Stack Mastery Tracker</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="icon" href="./img/скрипт-removebg-preview.png" />
-
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      :root {
-        --bg: #0f172a;
-        --card: rgba(15, 23, 42, 0.75);
-        --card-border: rgba(255, 255, 255, 0.08);
-        --text: #f8fafc;
-        --muted: #94a3b8;
-        --primary: #38bdf8;
-        --primary-2: #8b5cf6;
-        --success: #22c55e;
-        --glass: rgba(255, 255, 255, 0.04);
-        --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-      }
-
-      body {
-        font-family: "Inter", sans-serif;
-        background:
-          radial-gradient(
-            circle at top left,
-            rgba(56, 189, 248, 0.18),
-            transparent 25%
-          ),
-          radial-gradient(
-            circle at top right,
-            rgba(139, 92, 246, 0.18),
-            transparent 25%
-          ),
-          var(--bg);
-        color: var(--text);
-        min-height: 100vh;
-        padding: 24px;
-        line-height: 1.6;
-      }
-
-      .container {
-        max-width: 1400px;
-        margin: auto;
-      }
-
-      .hero {
-        background: var(--card);
-        border: 1px solid var(--card-border);
-        backdrop-filter: blur(18px);
-        border-radius: 28px;
-        padding: 36px;
-        box-shadow: var(--shadow);
-        margin-bottom: 28px;
-        top: 18px;
-        z-index: 100;
-      }
-
-      .hero-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 20px;
-        flex-wrap: wrap;
-      }
-
-      .hero h1 {
-        font-size: clamp(2rem, 4vw, 3.4rem);
-        font-weight: 800;
-        letter-spacing: -1px;
-        line-height: 1.1;
-        margin-bottom: 12px;
-        background: linear-gradient(90deg, #fff, #38bdf8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .hero p {
-        color: var(--muted);
-        max-width: 800px;
-        font-size: 1rem;
-      }
-
-      .stats {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(120px, 1fr));
-        gap: 14px;
-        margin-top: 26px;
-      }
-
-      .stat-card {
-        background: var(--glass);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 18px;
-        padding: 18px;
-      }
-
-      .stat-card h3 {
-        font-size: 0.9rem;
-        color: var(--muted);
-        margin-bottom: 10px;
-        font-weight: 500;
-      }
-
-      .stat-card strong {
-        font-size: 2rem;
-        display: block;
-        font-weight: 800;
-      }
-
-      .progress-section {
-        margin-top: 28px;
-      }
-
-      .progress-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 12px;
-        font-weight: 600;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-
-      .progress-bar {
-        width: 100%;
-        height: 16px;
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 999px;
-        overflow: hidden;
-        position: relative;
-      }
-
-      .progress-fill {
-        height: 100%;
-        width: 0%;
-        border-radius: 999px;
-        background: linear-gradient(90deg, var(--primary), var(--primary-2));
-        transition: width 0.35s ease;
-        position: relative;
-      }
-
-      .progress-fill::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          45deg,
-          rgba(255, 255, 255, 0.15) 25%,
-          transparent 25%,
-          transparent 50%,
-          rgba(255, 255, 255, 0.15) 50%,
-          rgba(255, 255, 255, 0.15) 75%,
-          transparent 75%,
-          transparent
-        );
-        background-size: 24px 24px;
-        animation: move 1s linear infinite;
-      }
-
-      @keyframes move {
-        from {
-          background-position: 0 0;
-        }
-        to {
-          background-position: 24px 0;
-        }
-      }
-
-      .months {
-        display: grid;
-        gap: 26px;
-      }
-
-      .month {
-        background: var(--card);
-        border: 1px solid var(--card-border);
-        border-radius: 28px;
-        overflow: hidden;
-        backdrop-filter: blur(14px);
-        box-shadow: var(--shadow);
-      }
-
-      .month-header {
-        padding: 28px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.04),
-          transparent
-        );
-      }
-
-      .month-label {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 8px 14px;
-        border-radius: 999px;
-        background: rgba(56, 189, 248, 0.12);
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        color: #7dd3fc;
-        font-size: 0.8rem;
-        font-weight: 700;
-        margin-bottom: 14px;
-      }
-
-      .month-title {
-        font-size: clamp(1.4rem, 3vw, 2rem);
-        font-weight: 800;
-        margin-bottom: 10px;
-      }
-
-      .month-note {
-        color: var(--muted);
-        max-width: 900px;
-      }
-
-      .table-wrapper {
-        overflow-x: auto;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 860px;
-      }
-
-      thead {
-        background: rgba(255, 255, 255, 0.03);
-      }
-
-      thead th {
-        padding: 16px;
-        text-align: left;
-        color: var(--muted);
-        font-size: 0.85rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-      }
-
-      tbody tr {
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        transition: 0.2s ease;
-      }
-
-      tbody tr:hover {
-        background: rgba(255, 255, 255, 0.03);
-      }
-
-      td {
-        padding: 18px 16px;
-        vertical-align: top;
-      }
-
-      .section-row td {
-        background: rgba(255, 255, 255, 0.04);
-        color: #cbd5e1;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        font-size: 0.78rem;
-        padding: 14px 16px;
-      }
-
-      .week-badge {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        color: #fff;
-        padding: 8px 12px;
-        border-radius: 12px;
-        font-size: 0.8rem;
-        display: inline-block;
-        white-space: nowrap;
-        font-weight: 600;
-      }
-
-      .cat {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 8px 12px;
-        border-radius: 999px;
-        font-size: 0.76rem;
-        font-weight: 700;
-        white-space: nowrap;
-        border: 1px solid transparent;
-      }
-
-      .cat-learn {
-        background: rgba(56, 189, 248, 0.14);
-        color: #7dd3fc;
-        border-color: rgba(56, 189, 248, 0.2);
-      }
-
-      .cat-prac {
-        background: rgba(34, 197, 94, 0.14);
-        color: #86efac;
-        border-color: rgba(34, 197, 94, 0.2);
-      }
-
-      .cat-build {
-        background: rgba(168, 85, 247, 0.14);
-        color: #d8b4fe;
-        border-color: rgba(168, 85, 247, 0.2);
-      }
-
-      .cat-review {
-        background: rgba(249, 115, 22, 0.14);
-        color: #fdba74;
-        border-color: rgba(249, 115, 22, 0.2);
-      }
-
-      .cat-goal,
-      .cat-use {
-        background: rgba(250, 204, 21, 0.14);
-        color: #fde68a;
-        border-color: rgba(250, 204, 21, 0.2);
-      }
-
-      .checkbox-cell {
-        text-align: center;
-        width: 60px;
-      }
-
-      .task-checkbox {
-        appearance: none;
-        width: 24px;
-        height: 24px;
-        border-radius: 8px;
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        background: rgba(255, 255, 255, 0.04);
-        cursor: pointer;
-        transition: all 0.25s ease;
-        position: relative;
-      }
-
-      .task-checkbox:checked {
-        background: linear-gradient(135deg, var(--primary), var(--primary-2));
-        border-color: transparent;
-        transform: scale(1.05);
-      }
-
-      .task-checkbox:checked::after {
-        content: "✓";
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.9rem;
-        color: white;
-        font-weight: 700;
-      }
-
-      .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 22px;
-        padding: 26px;
-      }
-
-      .skills-grid table {
-        min-width: auto;
-        border-radius: 18px;
-        overflow: hidden;
-        background: rgba(255, 255, 255, 0.03);
-      }
-
-      .reset-btn {
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-        border: none;
-        color: white;
-        padding: 14px 18px;
-        border-radius: 16px;
-        cursor: pointer;
-        font-weight: 700;
-        transition: 0.25s ease;
-        font-size: 0.95rem;
-      }
-
-      .reset-btn:hover {
-        transform: translateY(-2px);
-        opacity: 0.95;
-      }
-
-      .streak-pill {
-        background: rgba(34, 197, 94, 0.14);
-        border: 1px solid rgba(34, 197, 94, 0.2);
-        color: #86efac;
-        padding: 12px 16px;
-        border-radius: 16px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      @media (max-width: 900px) {
-        body {
-          padding: 16px;
-        }
-
-        .hero {
-          padding: 24px;
-          position: relative;
-          top: 0;
-        }
-
-        .stats {
-          grid-template-columns: 1fr;
-        }
-
-        .month-header {
-          padding: 22px;
-        }
-
-        td,
-        th {
-          padding: 14px 12px;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .hero-top {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .reset-btn {
-          width: 100%;
-        }
-
-        .streak-pill {
-          width: 100%;
-          justify-content: center;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <section class="hero">
-        <div class="hero-top">
-          <div>
-            <h1>MERN Stack Mastery</h1>
-            <p>
-              A modern interactive curriculum tracker with saved progress,
-              streak tracking, responsive layout, and automatic persistence
-              using local storage.
-            </p>
-          </div>
-
-          <button class="reset-btn" onclick="resetProgress()">
-            Reset Progress
-          </button>
-        </div>
-
-        <div class="stats">
-          <div class="stat-card">
-            <h3>Completed Tasks</h3>
-            <strong id="completedCount">0</strong>
-          </div>
-
-          <div class="stat-card">
-            <h3>Total Tasks</h3>
-            <strong id="totalCount">0</strong>
-          </div>
-
-          <div class="stat-card">
-            <h3>Progress</h3>
-            <strong id="progressPercent">0%</strong>
-          </div>
-        </div>
-
-        <div class="progress-section">
-          <div class="progress-header">
-            <span>Overall Progress</span>
-            <div class="streak-pill">
-              🔥 <span id="streakCount">0 Day Streak</span>
-            </div>
-          </div>
-
-          <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-          </div>
-        </div>
-      </section>
-
-      <div class="months" id="monthsContainer"></div>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MERN Stack Mastery — 4-Month Developer Curriculum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #090b0e;
+      --surface: #0f1117;
+      --surface-2: #161b24;
+      --border: #1c2333;
+      --border-light: #252d3d;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --accent: #10b981;
+      --accent-glow: rgba(16,185,129,0.15);
+      --accent-dim: rgba(16,185,129,0.08);
+      --streak: #f59e0b;
+      --streak-glow: rgba(245,158,11,0.15);
+      --radius: 12px;
+      --radius-sm: 6px;
+
+      --tag-theory-bg:  rgba(59,130,246,0.12);   --tag-theory:  #60a5fa;
+      --tag-code-bg:    rgba(16,185,129,0.12);    --tag-code:    #34d399;
+      --tag-build-bg:   rgba(34,211,238,0.12);    --tag-build:   #22d3ee;
+      --tag-review-bg:  rgba(251,146,60,0.12);    --tag-review:  #fb923c;
+      --tag-debug-bg:   rgba(245,158,11,0.12);    --tag-debug:   #fbbf24;
+      --tag-goal-bg:    rgba(167,139,250,0.12);   --tag-goal:    #a78bfa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Manrope', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      padding-top: 72px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── Sticky Bar ── */
+    #sticky-bar {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(9,11,14,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .sticky-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .progress-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+    .progress-label span:last-child { color: var(--accent); font-weight: 600; }
+
+    .progress-track {
+      height: 5px;
+      background: var(--surface-2);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981, #06d6a0);
+      border-radius: 99px;
+      transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 0 8px rgba(16,185,129,0.5);
+      width: 0%;
+    }
+
+    .streak-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--streak-glow);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      flex-shrink: 0;
+    }
+    .streak-icon { font-size: 1rem; }
+    .streak-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--streak);
+      line-height: 1;
+    }
+    .streak-label {
+      font-size: 0.6rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .streak-text { display: flex; flex-direction: column; gap: 1px; }
+
+    /* ── Main ── */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header { margin-bottom: 48px; }
+
+    .page-header-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .page-header-tag::before {
+      content: '';
+      width: 20px; height: 1px;
+      background: var(--accent);
+    }
+
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+
+    .page-header-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .page-header-meta span { display: flex; align-items: center; gap: 6px; }
+    .meta-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── Stats ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: var(--border-light); }
+    .stat-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .stat-card.accent .stat-value { color: var(--accent); }
+    .stat-card.fire   .stat-value { color: var(--streak); }
+
+    /* ── Month ── */
+    .month {
+      margin-bottom: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .month:hover { border-color: var(--border-light); }
+
+    .month-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .month-header-left { display: flex; flex-direction: column; gap: 8px; }
+    .month-label-row   { display: flex; align-items: center; gap: 10px; }
+
+    .month-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: var(--accent-dim);
+      border: 1px solid rgba(16,185,129,0.2);
+      color: var(--accent);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .month-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .month-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    /* Ring progress */
+    .month-progress {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .month-prog-ring {
+      position: relative;
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+    }
+    .month-prog-ring svg {
+      transform: rotate(-90deg);
+      width: 48px; height: 48px;
+    }
+    .ring-track {
+      fill: none;
+      stroke: var(--surface-2);
+      stroke-width: 4;
+    }
+    .ring-fill {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 113;
+      stroke-dashoffset: 113;
+      transition: stroke-dashoffset 0.6s cubic-bezier(0.4,0,0.2,1);
+      filter: drop-shadow(0 0 3px rgba(16,185,129,0.5));
+    }
+    .ring-percent {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .month-prog-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    .month-prog-text strong {
+      color: var(--text);
+      font-weight: 600;
+      display: block;
+      font-size: 0.85rem;
+    }
+
+    /* ── Table ── */
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    thead tr { background: var(--surface-2); }
+
+    thead th {
+      padding: 10px 14px;
+      text-align: left;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover      { background: rgba(255,255,255,0.02); }
+    tbody tr.done-row   { opacity: 0.45; }
+
+    td {
+      padding: 10px 14px;
+      vertical-align: middle;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78em;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+
+    strong { color: var(--text); font-weight: 600; }
+
+    .section-row td {
+      background: var(--surface-2);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 7px 14px;
+      font-weight: 500;
+    }
+
+    .week-cell { white-space: nowrap; width: 72px; }
+
+    .week-badge {
+      display: inline-block;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── Category pills ── */
+    .cat {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 99px;
+      font-size: 0.62rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+      border: 1px solid transparent;
+    }
+    .cat-theory { background: var(--tag-theory-bg); color: var(--tag-theory); border-color: rgba(96,165,250,0.2); }
+    .cat-code   { background: var(--tag-code-bg);   color: var(--tag-code);   border-color: rgba(52,211,153,0.2); }
+    .cat-build  { background: var(--tag-build-bg);  color: var(--tag-build);  border-color: rgba(34,211,238,0.2); }
+    .cat-review { background: var(--tag-review-bg); color: var(--tag-review); border-color: rgba(251,146,60,0.2); }
+    .cat-debug  { background: var(--tag-debug-bg);  color: var(--tag-debug);  border-color: rgba(251,191,36,0.2); }
+    .cat-goal   { background: var(--tag-goal-bg);   color: var(--tag-goal);   border-color: rgba(167,139,250,0.2); }
+
+    /* ── Custom Checkbox ── */
+    .cb-col { width: 40px; text-align: center; }
+
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 17px; height: 17px;
+      border: 1.5px solid var(--border-light);
+      border-radius: 4px;
+      cursor: pointer;
+      background: transparent;
+      position: relative;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      flex-shrink: 0;
+    }
+    input[type="checkbox"]:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+    input[type="checkbox"]:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim), 0 0 8px rgba(16,185,129,0.3);
+    }
+    input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 4px; top: 1.5px;
+      width: 5px; height: 9px;
+      border: 2px solid #090b0e;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    /* ── Footer ── */
+    .page-footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+    .reset-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .reset-btn:hover { border-color: #ef4444; color: #ef4444; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: var(--surface);
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 12px 18px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      z-index: 200;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      pointer-events: none;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── Particles ── */
+    @keyframes particle-fall {
+      0%   { transform: translateY(-10px) rotate(0deg);   opacity: 1; }
+      100% { transform: translateY(80px)  rotate(360deg); opacity: 0; }
+    }
+    .particle {
+      position: fixed;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: particle-fall 0.9s ease-in forwards;
+      z-index: 300;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      #sticky-bar { gap: 12px; padding: 0 12px; }
+      .sticky-logo { display: none; }
+      .container { padding: 24px 14px 60px; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .month-header { flex-direction: column; }
+      .streak-label { display: none; }
+    }
+
+    @media print {
+      #sticky-bar, .toast, .reset-btn { display: none; }
+      body { background: #fff; color: #000; padding-top: 0; }
+      .month { border: 1px solid #ccc; }
+      .page-header h1 { -webkit-text-fill-color: #000; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Bar -->
+  <div id="sticky-bar">
+    <div class="sticky-logo">MERN Mastery</div>
+    <div class="progress-center">
+      <div class="progress-label">
+        <span>Overall Progress</span>
+        <span id="bar-count">0 / 0 tasks</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="main-fill"></div>
+      </div>
+    </div>
+    <div class="streak-badge">
+      <span class="streak-icon">🔥</span>
+      <div class="streak-text">
+        <span class="streak-count" id="streak-count">0</span>
+        <span class="streak-label">day streak</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <div class="container">
+
+    <header class="page-header">
+      <div class="page-header-tag">Developer Curriculum</div>
+      <h1>MERN Stack Mastery<br>4-Month Roadmap</h1>
+      <div class="page-header-meta">
+        <span><span class="meta-dot"></span>16 Weeks</span>
+        <span><span class="meta-dot"></span>4 Months</span>
+        <span><span class="meta-dot"></span>Full Engineering Roadmap</span>
+      </div>
+    </header>
+
+    <div class="stats-row">
+      <div class="stat-card accent">
+        <div class="stat-value" id="stat-done">0</div>
+        <div class="stat-label">Tasks Done</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-remaining">0</div>
+        <div class="stat-label">Remaining</div>
+      </div>
+      <div class="stat-card fire">
+        <div class="stat-value" id="stat-streak">0</div>
+        <div class="stat-label">Day Streak 🔥</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-longest">0</div>
+        <div class="stat-label">Best Streak</div>
+      </div>
     </div>
 
-    <script>
-      const curriculum = [
-        {
-          month: "Month 1",
-          title: "Advanced React Framework & State Architecture",
-          note: "Isolate rendering performance, abstract reusable logic with hooks, and master deep client/server state orchestration.",
-          weeks: [
-            {
-              title:
-                "Week 1 — DOM Performance & Functional Rendering Stability",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "Virtual DOM Diffing: Learn how React computes structural adjustments and applies patches.",
-                },
-                {
-                  type: "Code",
-                  text: "useMemo Array Filters: Cache intensive dataset filter logic execution using the useMemo hook.",
-                },
-                {
-                  type: "Theory",
-                  text: "Reference Equality: Master why inline functions re-instantiate, forcing downstream rendering cycles.",
-                },
-                {
-                  type: "Code",
-                  text: "useCallback Closures: Preserve child handler references across re-renders using useCallback.",
-                },
-                {
-                  type: "Debug",
-                  text: "React DevTools Profiler: Record component execution profiles and intercept redundant render triggers.",
-                },
-              ],
-            },
-            {
-              title: "Week 2 — Persistent References & Custom Extraction Hooks",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "useRef Mutable Box Engine: Understand how mutable values persist across cycles without triggering UI redraws.",
-                },
-                {
-                  type: "Code",
-                  text: "DOM Node Focus Anchoring: Bind a ref to an input element to handle programmatic focus triggers.",
-                },
-                {
-                  type: "Theory",
-                  text: "Custom Hook Isolation Rules: Abstract combinations of useState and useEffect into shareable files.",
-                },
-                {
-                  type: "Code",
-                  text: "useLocalStorage Engine: Code a custom hook that syncs local reactive states with browser storage.",
-                },
-                {
-                  type: "Code",
-                  text: "useDebounce Optimization: Drop high-frequency parameters into delayed timer windows.",
-                },
-              ],
-            },
-            {
-              title: "Week 3 — Central Client States (Redux Toolkit Ecosystem)",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "Redux Flow Architecture: Trace how actions travel through slices to update global data streams.",
-                },
-                {
-                  type: "Code",
-                  text: "Central Store Orchestration: Initialize the primary store instance wrapper via configureStore().",
-                },
-                {
-                  type: "Code",
-                  text: "Slice Reducer Design: Build an isolated uiSlice.js file tracking shared UI sidebars and modal states.",
-                },
-                {
-                  type: "Code",
-                  text: "useDispatch Functional Triggers: Fire slice mutations from deep components using the dispatch hook.",
-                },
-                {
-                  type: "Code",
-                  text: "useSelector State Reading: Read specific state keys cleanly without causing unneeded component renders.",
-                },
-              ],
-            },
-            {
-              title: "Week 4 — Server Cache Synchronization (TanStack Query)",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "Client-State vs Server-State Separation: Learn why remote data needs a caching layer instead of local UI states.",
-                },
-                {
-                  type: "Code",
-                  text: "useQuery Infrastructure: Hook up network GET requests mapped to explicit string array keys.",
-                },
-                {
-                  type: "Code",
-                  text: "Conditional Content Mapping: Render isLoading, isError, and cache data branches smoothly.",
-                },
-                {
-                  type: "Code",
-                  text: "useMutation Server Updates: Process data modifications on endpoints using mutation pipelines.",
-                },
-                {
-                  type: "Code",
-                  text: "Cache Key Invalidation: Force automatic data re-fetching across active queries with queryClient.",
-                },
-              ],
-            },
-          ],
-        },
+    <!-- Months injected here -->
+    <div id="months-container"></div>
 
-        {
-          month: "Month 2",
-          title: "Form Validation & Layered Backend Architectures",
-          note: "Secure web inputs via runtime parsing schemas while migrating single-file servers into structured enterprise layers.",
-          weeks: [
-            {
-              title: "Week 5 — High-Performance Form Handling & Schema Parsing",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "Re-render Boundaries: Study how React Hook Form separates input fields to stop full-page redraws.",
-                },
-                {
-                  type: "Code",
-                  text: "Zod Blueprint Shapes: Build strict object validation schemas checking accurate email and string layouts.",
-                },
-                {
-                  type: "Code",
-                  text: "Hook Form Resolvers: Feed Zod verification engines directly into front-end form handlers.",
-                },
-                {
-                  type: "Build",
-                  text: "Profile Edit Interface: Construct a multi-field form displaying inline runtime error messages.",
-                },
-                {
-                  type: "Review",
-                  text: "Form Integrity Audit: Verify invalid submissions are blocked before data travels over the network.",
-                },
-              ],
-            },
-            {
-              title: "Week 6 — Layered Controller Architecture (Node/Express)",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "Layered Responsibility Design: Learn why decoupling route paths from internal database lookups blocks technical debt.",
-                },
-                {
-                  type: "Code",
-                  text: "Controller Extraction: Move inline (req, res) logic blocks out of routes into separate controller files.",
-                },
-                {
-                  type: "Code",
-                  text: "Service Layer Decoupling: Write pure database lookups without relying directly on Express objects.",
-                },
-                {
-                  type: "Code",
-                  text: "Central Express Error Catching: Create a global async catch handler using (err, req, res, next).",
-                },
-                {
-                  type: "Code",
-                  text: "Route Exception Forwarding: Update controller error catches to forward failures using next(error).",
-                },
-              ],
-            },
-            {
-              title: "Week 7 — Advanced NoSQL Data Modeling & Aggregations",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "Document Structural Strategy: Evaluate trade-offs of embedding child data vs collection references.",
-                },
-                {
-                  type: "Code",
-                  text: "Mongoose Population Maps: Build relational ties using Schema.Types.ObjectId keys across populate() queries.",
-                },
-                {
-                  type: "Theory",
-                  text: "Aggregation Pipelines: Learn how multi-stage arrays filter and reshape collection streams.",
-                },
-                {
-                  type: "Code",
-                  text: "Pipeline Engineering: Write queries using $match and $group to compute filtered statistics.",
-                },
-                {
-                  type: "Code",
-                  text: "Database Index Speed-ups: Set up indices on high-volume lookups to optimize processing time.",
-                },
-              ],
-            },
-            {
-              title: "Week 8 — Token Lifecycles & HttpOnly Cookie Security",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "Token Exploit Vulnerabilities: Study how local storage exposes scripts to XSS attacks.",
-                },
-                {
-                  type: "Code",
-                  text: "Short-Lived Access Tokens: Sign brief 15-minute verification payloads inside JWT utilities.",
-                },
-                {
-                  type: "Code",
-                  text: "Secure Cookie Delivery: Pass refresh keys using express responses with active httpOnly settings.",
-                },
-                {
-                  type: "Code",
-                  text: "Token Rotation Endpoint: Code a /refresh path that verifies cookies for new access strings.",
-                },
-                {
-                  type: "Code",
-                  text: "Auth Shield Middleware: Intercept requests to check auth tokens and populate req.user.",
-                },
-              ],
-            },
-          ],
-        },
+    <div class="page-footer">
+      <div class="footer-text">Progress saved in browser · persists across refreshes</div>
+      <button class="reset-btn" id="reset-btn">↺ Reset All Progress</button>
+    </div>
 
-        {
-          month: "Month 3",
-          title: "Server Hardening Protocols & Static Typed Backends",
-          note: "Protect public endpoints against malicious traffic injections before transitioning into type-safe environments.",
-          weeks: [
-            {
-              title: "Week 9 — Production Server Hardening Protocols",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "Cross-Origin Resource Sharing: Learn how browsers read headers to prevent unsafe lookups.",
-                },
-                {
-                  type: "Code",
-                  text: "CORS Origin Control: Lock down cross-origin entry points using whitelist arrays.",
-                },
-                {
-                  type: "Code",
-                  text: "Helmet Protection Layers: Protect headers against XSS risks using helmet middleware.",
-                },
-                {
-                  type: "Code",
-                  text: "API Request Rate Limiting: Use express-rate-limit to restrict excessive requests.",
-                },
-                {
-                  type: "Debug",
-                  text: "Security Header Audits: Use curl or terminal tools to verify active defensive headers.",
-                },
-              ],
-            },
-            {
-              title: "Week 10 — Multi-part Media File Stream Management",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "Multipart Data Architecture: Understand how binary asset data streams over HTTP.",
-                },
-                {
-                  type: "Code",
-                  text: "Multer Memory Processing: Capture uploads directly into memory buffers.",
-                },
-                {
-                  type: "Theory",
-                  text: "Cloud Asset Architectures: Evaluate why cloud storage platforms outperform raw disk spaces.",
-                },
-                {
-                  type: "Code",
-                  text: "Cloudinary SDK Upload Pipelines: Stream memory buffers directly to Cloudinary.",
-                },
-                {
-                  type: "Build",
-                  text: "Avatar Document Matching: Commit cloud URLs into mongoose user entries.",
-                },
-              ],
-            },
-            {
-              title: "Week 11 — Enterprise TypeScript Foundational Core",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "The Type Compilation Lifecycle: Learn how TS protects compilation environments.",
-                },
-                {
-                  type: "Code",
-                  text: "Primitive Typing Configurations: Define explicit string, numeric, and array fields.",
-                },
-                {
-                  type: "Code",
-                  text: "Interface Architecture Structures: Build explicit type contracts with optional properties.",
-                },
-                {
-                  type: "Code",
-                  text: "Union and Intersection Layouts: Mix data blueprints using | and &.",
-                },
-                {
-                  type: "Code",
-                  text: "tsconfig Safety Rules: Turn on strict compiler rules like noImplicitAny.",
-                },
-              ],
-            },
-            {
-              title: "Week 12 — Type-Safe Express Environments",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "External Ambient Typing Packages: Learn why @types packages are important.",
-                },
-                {
-                  type: "Code",
-                  text: "Express Route Typing Contracts: Assign strict Request and Response interfaces.",
-                },
-                {
-                  type: "Code",
-                  text: "Generics URL Typing: Enforce strict structural types on req.params.id.",
-                },
-                {
-                  type: "Code",
-                  text: "Zod Runtime Assertions: Match incoming network request bodies directly to TS rules.",
-                },
-                {
-                  type: "Code",
-                  text: "Safe Auth Request Extensions: Expand express definitions to handle typed req.user.",
-                },
-              ],
-            },
-          ],
-        },
+  </div><!-- /container -->
 
-        {
-          month: "Month 4",
-          title: "Type-Safe UI, Real-Time WebSockets & Production DevOps",
-          note: "Add complete type safety to the frontend, establish duplex sockets, and deploy to production.",
-          weeks: [
-            {
-              title:
-                "Week 13 — TypeScript Architecture Inside React Components",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "Component Prop Verification Contracts: Eliminate cross-file data passing bugs.",
-                },
-                {
-                  type: "Code",
-                  text: "Prop Type Configuration: Design component blueprints supporting primitive inputs.",
-                },
-                {
-                  type: "Code",
-                  text: "Hook Generics Integrations: Add type definitions to hooks like useState<IUser>.",
-                },
-                {
-                  type: "Code",
-                  text: "DOM Event Handler Definitions: Secure data input using exact event typings.",
-                },
-                {
-                  type: "Debug",
-                  text: "Compiler Evaluation Check: Run tsc --noEmit to solve type errors.",
-                },
-              ],
-            },
-            {
-              title: "Week 14 — Bidirectional Real-Time WebSockets (Socket.io)",
-              tasks: [
-                {
-                  type: "Theory",
-                  text: "Full-Duplex Sockets: Learn how persistent TCP socket routes outperform HTTP loops.",
-                },
-                {
-                  type: "Code",
-                  text: "Server Socket Bootstrapping: Mount a production-grade Socket.io server.",
-                },
-                {
-                  type: "Code",
-                  text: "TypeScript Connection Rules: Type-check socket data packets.",
-                },
-                {
-                  type: "Code",
-                  text: "Multiroom Communication Spaces: Group socket instances using socket.join(roomId).",
-                },
-                {
-                  type: "Code",
-                  text: "Frontend Connection Hooks: Wire type-safe socket.on() handlers into React.",
-                },
-              ],
-            },
-            {
-              title: "Week 15 — Real-Time Messaging App Integration",
-              tasks: [
-                {
-                  type: "Build",
-                  text: "Real-Time Layout Design: Build a message feed panel and room selector.",
-                },
-                {
-                  type: "Build",
-                  text: "Live Connection Badges: Update connection indicators instantly.",
-                },
-                {
-                  type: "Build",
-                  text: "Message Delivery Pipelines: Broadcast text packets across socket links.",
-                },
-                {
-                  type: "Build",
-                  text: "Optimized Feed Redraws: Keep chat feeds scrolling smoothly.",
-                },
-                {
-                  type: "Review",
-                  text: "Simulated Sync Assessment: Verify synchronization across multiple browsers.",
-                },
-              ],
-            },
-            {
-              title: "Week 16 — Production DevOps & Cloud Launch Architecture",
-              tasks: [
-                {
-                  type: "Build",
-                  text: "Database Cluster Configuration: Create a cloud database instance on MongoDB Atlas.",
-                },
-                {
-                  type: "Build",
-                  text: "API Cloud Deployment: Deploy Express onto Render or Railway.",
-                },
-                {
-                  type: "Build",
-                  text: "React Web App Bundling: Host the frontend build on Vercel.",
-                },
-                {
-                  type: "Build",
-                  text: "Secure Variable Injection: Protect secrets using environment variables.",
-                },
-                {
-                  type: "Goal",
-                  text: "Final Production Sign-Off: Run end-to-end tests across live URLs.",
-                },
-              ],
-            },
-          ],
-        },
-      ];
-      const container = document.getElementById("monthsContainer");
+  <script>
+    /* ═══════════════════════════════════════════
+       CURRICULUM DATA
+    ═══════════════════════════════════════════ */
+    const curriculum = [
+      {
+        month: "Month 1",
+        title: "Advanced React Framework & State Architecture",
+        note: "Isolate rendering performance, abstract reusable logic with hooks, and master deep client/server state orchestration.",
+        weeks: [
+          {
+            title: "Week 1 — DOM Performance & Functional Rendering Stability",
+            tasks: [
+              { type: "Theory", text: "Virtual DOM Diffing: Learn how React computes structural adjustments and applies patches." },
+              { type: "Code",   text: "useMemo Array Filters: Cache intensive dataset filter logic execution using the useMemo hook." },
+              { type: "Theory", text: "Reference Equality: Master why inline functions re-instantiate, forcing downstream rendering cycles." },
+              { type: "Code",   text: "useCallback Closures: Preserve child handler references across re-renders using useCallback." },
+              { type: "Debug",  text: "React DevTools Profiler: Record component execution profiles and intercept redundant render triggers." },
+            ],
+          },
+          {
+            title: "Week 2 — Persistent References & Custom Extraction Hooks",
+            tasks: [
+              { type: "Theory", text: "useRef Mutable Box Engine: Understand how mutable values persist across cycles without triggering UI redraws." },
+              { type: "Code",   text: "DOM Node Focus Anchoring: Bind a ref to an input element to handle programmatic focus triggers." },
+              { type: "Theory", text: "Custom Hook Isolation Rules: Abstract combinations of useState and useEffect into shareable files." },
+              { type: "Code",   text: "useLocalStorage Engine: Code a custom hook that syncs local reactive states with browser storage." },
+              { type: "Code",   text: "useDebounce Optimization: Drop high-frequency parameters into delayed timer windows." },
+            ],
+          },
+          {
+            title: "Week 3 — Central Client States (Redux Toolkit Ecosystem)",
+            tasks: [
+              { type: "Theory", text: "Redux Flow Architecture: Trace how actions travel through slices to update global data streams." },
+              { type: "Code",   text: "Central Store Orchestration: Initialize the primary store instance wrapper via configureStore()." },
+              { type: "Code",   text: "Slice Reducer Design: Build an isolated uiSlice.js file tracking shared UI sidebars and modal states." },
+              { type: "Code",   text: "useDispatch Functional Triggers: Fire slice mutations from deep components using the dispatch hook." },
+              { type: "Code",   text: "useSelector State Reading: Read specific state keys cleanly without causing unneeded component renders." },
+            ],
+          },
+          {
+            title: "Week 4 — Server Cache Synchronization (TanStack Query)",
+            tasks: [
+              { type: "Theory", text: "Client-State vs Server-State Separation: Learn why remote data needs a caching layer instead of local UI states." },
+              { type: "Code",   text: "useQuery Infrastructure: Hook up network GET requests mapped to explicit string array keys." },
+              { type: "Code",   text: "Conditional Content Mapping: Render isLoading, isError, and cache data branches smoothly." },
+              { type: "Code",   text: "useMutation Server Updates: Process data modifications on endpoints using mutation pipelines." },
+              { type: "Code",   text: "Cache Key Invalidation: Force automatic data re-fetching across active queries with queryClient." },
+            ],
+          },
+        ],
+      },
 
-      function getCategoryClass(type) {
-        const lower = type.toLowerCase();
+      {
+        month: "Month 2",
+        title: "Form Validation & Layered Backend Architectures",
+        note: "Secure web inputs via runtime parsing schemas while migrating single-file servers into structured enterprise layers.",
+        weeks: [
+          {
+            title: "Week 5 — High-Performance Form Handling & Schema Parsing",
+            tasks: [
+              { type: "Theory", text: "Re-render Boundaries: Study how React Hook Form separates input fields to stop full-page redraws." },
+              { type: "Code",   text: "Zod Blueprint Shapes: Build strict object validation schemas checking accurate email and string layouts." },
+              { type: "Code",   text: "Hook Form Resolvers: Feed Zod verification engines directly into front-end form handlers." },
+              { type: "Build",  text: "Profile Edit Interface: Construct a multi-field form displaying inline runtime error messages." },
+              { type: "Review", text: "Form Integrity Audit: Verify invalid submissions are blocked before data travels over the network." },
+            ],
+          },
+          {
+            title: "Week 6 — Layered Controller Architecture (Node/Express)",
+            tasks: [
+              { type: "Theory", text: "Layered Responsibility Design: Learn why decoupling route paths from internal database lookups blocks technical debt." },
+              { type: "Code",   text: "Controller Extraction: Move inline (req, res) logic blocks out of routes into separate controller files." },
+              { type: "Code",   text: "Service Layer Decoupling: Write pure database lookups without relying directly on Express objects." },
+              { type: "Code",   text: "Central Express Error Catching: Create a global async catch handler using (err, req, res, next)." },
+              { type: "Code",   text: "Route Exception Forwarding: Update controller error catches to forward failures using next(error)." },
+            ],
+          },
+          {
+            title: "Week 7 — Advanced NoSQL Data Modeling & Aggregations",
+            tasks: [
+              { type: "Theory", text: "Document Structural Strategy: Evaluate trade-offs of embedding child data vs collection references." },
+              { type: "Code",   text: "Mongoose Population Maps: Build relational ties using Schema.Types.ObjectId keys across populate() queries." },
+              { type: "Theory", text: "Aggregation Pipelines: Learn how multi-stage arrays filter and reshape collection streams." },
+              { type: "Code",   text: "Pipeline Engineering: Write queries using $match and $group to compute filtered statistics." },
+              { type: "Code",   text: "Database Index Speed-ups: Set up indices on high-volume lookups to optimize processing time." },
+            ],
+          },
+          {
+            title: "Week 8 — Token Lifecycles & HttpOnly Cookie Security",
+            tasks: [
+              { type: "Theory", text: "Token Exploit Vulnerabilities: Study how local storage exposes scripts to XSS attacks." },
+              { type: "Code",   text: "Short-Lived Access Tokens: Sign brief 15-minute verification payloads inside JWT utilities." },
+              { type: "Code",   text: "Secure Cookie Delivery: Pass refresh keys using express responses with active httpOnly settings." },
+              { type: "Code",   text: "Token Rotation Endpoint: Code a /refresh path that verifies cookies for new access strings." },
+              { type: "Code",   text: "Auth Shield Middleware: Intercept requests to check auth tokens and populate req.user." },
+            ],
+          },
+        ],
+      },
 
-        if (lower === "theory") return "cat-learn";
-        if (lower === "code") return "cat-prac";
-        if (lower === "build") return "cat-build";
-        if (lower === "review") return "cat-review";
-        if (lower === "debug") return "cat-review";
+      {
+        month: "Month 3",
+        title: "Server Hardening Protocols & Static Typed Backends",
+        note: "Protect public endpoints against malicious traffic injections before transitioning into type-safe environments.",
+        weeks: [
+          {
+            title: "Week 9 — Production Server Hardening Protocols",
+            tasks: [
+              { type: "Theory", text: "Cross-Origin Resource Sharing: Learn how browsers read headers to prevent unsafe lookups." },
+              { type: "Code",   text: "CORS Origin Control: Lock down cross-origin entry points using whitelist arrays." },
+              { type: "Code",   text: "Helmet Protection Layers: Protect headers against XSS risks using helmet middleware." },
+              { type: "Code",   text: "API Request Rate Limiting: Use express-rate-limit to restrict excessive requests." },
+              { type: "Debug",  text: "Security Header Audits: Use curl or terminal tools to verify active defensive headers." },
+            ],
+          },
+          {
+            title: "Week 10 — Multi-part Media File Stream Management",
+            tasks: [
+              { type: "Theory", text: "Multipart Data Architecture: Understand how binary asset data streams over HTTP." },
+              { type: "Code",   text: "Multer Memory Processing: Capture uploads directly into memory buffers." },
+              { type: "Theory", text: "Cloud Asset Architectures: Evaluate why cloud storage platforms outperform raw disk spaces." },
+              { type: "Code",   text: "Cloudinary SDK Upload Pipelines: Stream memory buffers directly to Cloudinary." },
+              { type: "Build",  text: "Avatar Document Matching: Commit cloud URLs into mongoose user entries." },
+            ],
+          },
+          {
+            title: "Week 11 — Enterprise TypeScript Foundational Core",
+            tasks: [
+              { type: "Theory", text: "The Type Compilation Lifecycle: Learn how TS protects compilation environments." },
+              { type: "Code",   text: "Primitive Typing Configurations: Define explicit string, numeric, and array fields." },
+              { type: "Code",   text: "Interface Architecture Structures: Build explicit type contracts with optional properties." },
+              { type: "Code",   text: "Union and Intersection Layouts: Mix data blueprints using | and &." },
+              { type: "Code",   text: "tsconfig Safety Rules: Turn on strict compiler rules like noImplicitAny." },
+            ],
+          },
+          {
+            title: "Week 12 — Type-Safe Express Environments",
+            tasks: [
+              { type: "Theory", text: "External Ambient Typing Packages: Learn why @types packages are important." },
+              { type: "Code",   text: "Express Route Typing Contracts: Assign strict Request and Response interfaces." },
+              { type: "Code",   text: "Generics URL Typing: Enforce strict structural types on req.params.id." },
+              { type: "Code",   text: "Zod Runtime Assertions: Match incoming network request bodies directly to TS rules." },
+              { type: "Code",   text: "Safe Auth Request Extensions: Expand express definitions to handle typed req.user." },
+            ],
+          },
+        ],
+      },
 
-        return "cat-goal";
-      }
+      {
+        month: "Month 4",
+        title: "Type-Safe UI, Real-Time WebSockets & Production DevOps",
+        note: "Add complete type safety to the frontend, establish duplex sockets, and deploy to production.",
+        weeks: [
+          {
+            title: "Week 13 — TypeScript Architecture Inside React Components",
+            tasks: [
+              { type: "Theory", text: "Component Prop Verification Contracts: Eliminate cross-file data passing bugs." },
+              { type: "Code",   text: "Prop Type Configuration: Design component blueprints supporting primitive inputs." },
+              { type: "Code",   text: "Hook Generics Integrations: Add type definitions to hooks like useState<IUser>." },
+              { type: "Code",   text: "DOM Event Handler Definitions: Secure data input using exact event typings." },
+              { type: "Debug",  text: "Compiler Evaluation Check: Run tsc --noEmit to solve type errors." },
+            ],
+          },
+          {
+            title: "Week 14 — Bidirectional Real-Time WebSockets (Socket.io)",
+            tasks: [
+              { type: "Theory", text: "Full-Duplex Sockets: Learn how persistent TCP socket routes outperform HTTP loops." },
+              { type: "Code",   text: "Server Socket Bootstrapping: Mount a production-grade Socket.io server." },
+              { type: "Code",   text: "TypeScript Connection Rules: Type-check socket data packets." },
+              { type: "Code",   text: "Multiroom Communication Spaces: Group socket instances using socket.join(roomId)." },
+              { type: "Code",   text: "Frontend Connection Hooks: Wire type-safe socket.on() handlers into React." },
+            ],
+          },
+          {
+            title: "Week 15 — Real-Time Messaging App Integration",
+            tasks: [
+              { type: "Build",  text: "Real-Time Layout Design: Build a message feed panel and room selector." },
+              { type: "Build",  text: "Live Connection Badges: Update connection indicators instantly." },
+              { type: "Build",  text: "Message Delivery Pipelines: Broadcast text packets across socket links." },
+              { type: "Build",  text: "Optimized Feed Redraws: Keep chat feeds scrolling smoothly." },
+              { type: "Review", text: "Simulated Sync Assessment: Verify synchronization across multiple browsers." },
+            ],
+          },
+          {
+            title: "Week 16 — Production DevOps & Cloud Launch Architecture",
+            tasks: [
+              { type: "Build",  text: "Database Cluster Configuration: Create a cloud database instance on MongoDB Atlas." },
+              { type: "Build",  text: "API Cloud Deployment: Deploy Express onto Render or Railway." },
+              { type: "Build",  text: "React Web App Bundling: Host the frontend build on Vercel." },
+              { type: "Build",  text: "Secure Variable Injection: Protect secrets using environment variables." },
+              { type: "Goal",   text: "Final Production Sign-Off: Run end-to-end tests across live URLs." },
+            ],
+          },
+        ],
+      },
+    ];
 
-      function renderCurriculum() {
-        curriculum.forEach((month, monthIndex) => {
-          const monthEl = document.createElement("div");
-          monthEl.className = "month";
+    /* ═══════════════════════════════════════════
+       RENDER
+    ═══════════════════════════════════════════ */
+    const STORAGE_KEY = 'mern_mastery_v3';
+    const STREAK_KEY  = 'mern_streak_v3';
 
-          let html = `
-      <div class="month-header">
-        <div class="month-label">${month.month}</div>
-        <h2 class="month-title">${month.title}</h2>
-        <p class="month-note">${month.note}</p>
-      </div>
+    function catClass(type) {
+      return 'cat-' + type.toLowerCase();
+    }
 
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Done</th>
-              <th>Week</th>
-              <th>Type</th>
-              <th>Task</th>
-            </tr>
-          </thead>
-          <tbody>
-    `;
+    function renderCurriculum() {
+      const wrap = document.getElementById('months-container');
+      let globalIdx = 0;
 
-          month.weeks.forEach((week, weekIndex) => {
-            html += `
-        <tr class="section-row">
-          <td colspan="4">${week.title}</td>
-        </tr>
-      `;
+      curriculum.forEach((month, mi) => {
+        const div = document.createElement('div');
+        div.className = 'month';
+        div.dataset.month = mi;
 
-            week.tasks.forEach((task, taskIndex) => {
-              const taskId = `task-${monthIndex}-${weekIndex}-${taskIndex}`;
-
-              html += `
-          <tr>
-            <td class="checkbox-cell">
-              <input 
-                type="checkbox" 
-                class="task-checkbox" 
-                id="${taskId}" 
-              />
-            </td>
-
-            <td>
-              <span class="week-badge">
-                Week ${weekIndex + 1}
-              </span>
-            </td>
-
-            <td>
-              <span class="cat ${getCategoryClass(task.type)}">
-                ${task.type}
-              </span>
-            </td>
-
-            <td>${task.text}</td>
-          </tr>
-        `;
-            });
+        /* week rows */
+        let rows = '';
+        month.weeks.forEach((week, wi) => {
+          rows += `<tr class="section-row"><td colspan="4">${week.title}</td></tr>`;
+          week.tasks.forEach((task) => {
+            const id = `cb-${globalIdx++}`;
+            rows += `
+              <tr>
+                <td class="cb-col"><input type="checkbox" id="${id}"/></td>
+                <td class="week-cell"><span class="week-badge">Week ${wi + 1}</span></td>
+                <td><span class="cat ${catClass(task.type)}">${task.type}</span></td>
+                <td>${task.text}</td>
+              </tr>`;
           });
-
-          html += `
-          </tbody>
-        </table>
-      </div>
-    `;
-
-          monthEl.innerHTML = html;
-          container.appendChild(monthEl);
-        });
-      }
-
-      renderCurriculum();
-
-      const checkboxes = document.querySelectorAll(".task-checkbox");
-      const completedCount = document.getElementById("completedCount");
-      const totalCount = document.getElementById("totalCount");
-      const progressPercent = document.getElementById("progressPercent");
-      const progressFill = document.getElementById("progressFill");
-      const streakCount = document.getElementById("streakCount");
-
-      totalCount.textContent = checkboxes.length;
-
-      function saveProgress() {
-        const progress = {};
-
-        checkboxes.forEach((box) => {
-          progress[box.id] = box.checked;
         });
 
-        localStorage.setItem("mern-progress", JSON.stringify(progress));
+        div.innerHTML = `
+          <div class="month-header">
+            <div class="month-header-left">
+              <div class="month-label-row">
+                <span class="month-label">${month.month}</span>
+              </div>
+              <div class="month-title">${month.title}</div>
+              <div class="month-note">${month.note}</div>
+            </div>
+            <div class="month-progress">
+              <div class="month-prog-ring">
+                <svg viewBox="0 0 48 48">
+                  <circle class="ring-track" cx="24" cy="24" r="18"/>
+                  <circle class="ring-fill"  cx="24" cy="24" r="18"/>
+                </svg>
+                <div class="ring-percent">0%</div>
+              </div>
+              <div class="month-prog-text">
+                <strong id="m${mi}-count">0/0</strong>tasks done
+              </div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th class="cb-col">✓</th>
+                  <th>Week</th>
+                  <th>Type</th>
+                  <th>Task</th>
+                </tr>
+              </thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>`;
 
-        const today = new Date().toDateString();
-        localStorage.setItem("mern-last-active", today);
+        wrap.appendChild(div);
+      });
+    }
 
-        updateStreak();
-      }
+    renderCurriculum();
 
-      function loadProgress() {
-        const saved = JSON.parse(localStorage.getItem("mern-progress") || "{}");
+    /* ═══════════════════════════════════════════
+       STATE
+    ═══════════════════════════════════════════ */
+    const allCBs       = Array.from(document.querySelectorAll('input[type="checkbox"]'));
+    const monthBlocks  = Array.from(document.querySelectorAll('.month'));
+    const mainFill     = document.getElementById('main-fill');
+    const barCount     = document.getElementById('bar-count');
+    const statDone     = document.getElementById('stat-done');
+    const statRemaining= document.getElementById('stat-remaining');
+    const statStreak   = document.getElementById('stat-streak');
+    const statLongest  = document.getElementById('stat-longest');
+    const streakCount  = document.getElementById('streak-count');
+    const toast        = document.getElementById('toast');
 
-        checkboxes.forEach((box) => {
-          box.checked = !!saved[box.id];
-        });
-      }
+    function todayStr() { return new Date().toISOString().slice(0, 10); }
+    function yestStr()  {
+      const d = new Date(); d.setDate(d.getDate() - 1);
+      return d.toISOString().slice(0, 10);
+    }
 
-      function updateStats() {
-        const completed = [...checkboxes].filter((box) => box.checked).length;
-        const total = checkboxes.length;
-        const percent = Math.round((completed / total) * 100);
+    function loadStreak() {
+      try { return JSON.parse(localStorage.getItem(STREAK_KEY)) || { count:0, lastDate:null, longest:0 }; }
+      catch { return { count:0, lastDate:null, longest:0 }; }
+    }
+    function saveStreak(s) { localStorage.setItem(STREAK_KEY, JSON.stringify(s)); }
 
-        completedCount.textContent = completed;
-        progressPercent.textContent = percent + "%";
-        progressFill.style.width = percent + "%";
-      }
+    function recordActivity() {
+      const today = todayStr();
+      const s = loadStreak();
+      if (s.lastDate === today) return;
+      s.count = (s.lastDate === yestStr()) ? s.count + 1 : 1;
+      s.lastDate = today;
+      s.longest  = Math.max(s.longest, s.count);
+      saveStreak(s);
+    }
 
-      function updateStreak() {
-        const today = new Date();
-        const todayString = today.toDateString();
+    function loadChecked() {
+      try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY)) || []); }
+      catch { return new Set(); }
+    }
+    function saveChecked() {
+      const ids = allCBs.map((cb, i) => cb.checked ? i : -1).filter(i => i >= 0);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+    }
 
-        const lastActive = localStorage.getItem("mern-last-streak-date");
-        let streak = parseInt(localStorage.getItem("mern-streak") || "0");
+    function updateProgress() {
+      const total   = allCBs.length;
+      const checked = allCBs.filter(cb => cb.checked).length;
+      const pct     = total ? Math.round((checked / total) * 100) : 0;
 
-        if (!lastActive) {
-          streak = 1;
-        } else {
-          const lastDate = new Date(lastActive);
-          const diff = Math.floor((today - lastDate) / (1000 * 60 * 60 * 24));
+      mainFill.style.width      = pct + '%';
+      barCount.textContent      = `${checked} / ${total} tasks`;
+      statDone.textContent      = checked;
+      statRemaining.textContent = total - checked;
 
-          if (diff === 1) {
-            streak += 1;
-          } else if (diff > 1) {
-            streak = 1;
-          }
-        }
+      const s = loadStreak();
+      streakCount.textContent = s.count;
+      statStreak.textContent  = s.count;
+      statLongest.textContent = s.longest;
 
-        localStorage.setItem("mern-streak", streak);
-        localStorage.setItem("mern-last-streak-date", todayString);
+      /* per-month rings */
+      const CIRC = 2 * Math.PI * 18; // ≈ 113.1
+      monthBlocks.forEach((block, mi) => {
+        const cbs    = Array.from(block.querySelectorAll('input[type="checkbox"]'));
+        const mTotal = cbs.length;
+        const mDone  = cbs.filter(cb => cb.checked).length;
+        const mPct   = mTotal ? Math.round((mDone / mTotal) * 100) : 0;
 
-        streakCount.textContent = `${streak} Day Streak`;
-      }
+        const ring    = block.querySelector('.ring-fill');
+        const pctEl   = block.querySelector('.ring-percent');
+        const countEl = document.getElementById(`m${mi}-count`);
 
-      function initializeStreak() {
-        const streak = localStorage.getItem("mern-streak") || "0";
-        streakCount.textContent = `${streak} Day Streak`;
-      }
-
-      checkboxes.forEach((box) => {
-        box.addEventListener("change", () => {
-          saveProgress();
-          updateStats();
-        });
+        if (ring)    { ring.style.strokeDashoffset = CIRC - (CIRC * mPct / 100); ring.style.stroke = mPct === 100 ? '#f59e0b' : 'var(--accent)'; }
+        if (pctEl)   pctEl.textContent   = mPct + '%';
+        if (countEl) countEl.textContent = `${mDone}/${mTotal}`;
       });
 
-      function resetProgress() {
-        const confirmed = confirm("Reset all saved progress and streaks?");
+      /* done-row fading */
+      allCBs.forEach(cb => {
+        const row = cb.closest('tr');
+        if (row && !row.classList.contains('section-row')) {
+          row.classList.toggle('done-row', cb.checked);
+        }
+      });
+    }
 
-        if (!confirmed) return;
-
-        localStorage.removeItem("mern-progress");
-        localStorage.removeItem("mern-streak");
-        localStorage.removeItem("mern-last-streak-date");
-
-        checkboxes.forEach((box) => {
-          box.checked = false;
-        });
-
-        initializeStreak();
-        updateStats();
+    /* ── Particles ── */
+    function spawnParticles(el) {
+      const rect   = el.getBoundingClientRect();
+      const cx     = rect.left + rect.width / 2;
+      const cy     = rect.top  + rect.height / 2;
+      const colors = ['#10b981','#06d6a0','#34d399','#f59e0b','#60a5fa'];
+      for (let i = 0; i < 6; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.cssText = `left:${cx+(Math.random()-.5)*40}px;top:${cy}px;background:${colors[i%colors.length]};animation-delay:${i*.05}s;animation-duration:${.7+Math.random()*.4}s;`;
+        document.body.appendChild(p);
+        p.addEventListener('animationend', () => p.remove());
       }
+    }
 
-      loadProgress();
-      initializeStreak();
-      updateStats();
-    </script>
-  </body>
+    /* ── Toast ── */
+    let toastTimer;
+    function showToast(msg) {
+      clearTimeout(toastTimer);
+      toast.textContent = msg;
+      toast.classList.add('show');
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    /* ── Checkbox events ── */
+    allCBs.forEach((cb, i) => {
+      cb.addEventListener('change', () => {
+        if (cb.checked) {
+          spawnParticles(cb);
+          recordActivity();
+          monthBlocks.forEach((block, mi) => {
+            const cbs = Array.from(block.querySelectorAll('input[type="checkbox"]'));
+            if (cbs.includes(cb) && cbs.every(c => c.checked)) {
+              showToast(`🎉 ${curriculum[mi]?.month || 'Section'} complete!`);
+            }
+          });
+        }
+        saveChecked();
+        updateProgress();
+      });
+    });
+
+    /* ── Reset ── */
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      if (!confirm('Reset all progress? This cannot be undone.')) return;
+      allCBs.forEach(cb => { cb.checked = false; });
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(STREAK_KEY);
+      updateProgress();
+      showToast('Progress reset.');
+    });
+
+    /* ── Init ── */
+    (function init() {
+      const saved = loadChecked();
+      allCBs.forEach((cb, i) => { if (saved.has(i)) cb.checked = true; });
+      updateProgress();
+    })();
+  </script>
+</body>
 </html>
